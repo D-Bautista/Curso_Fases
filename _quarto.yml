@@ -3,8 +3,8 @@ project:
   output-dir: docs
 
 book:
-  title: "Curso_Fases"
-  author: "Norah Jones"
+  title: "Notas del Curso de Fases Topológicas del PCF 2014"
+  author: "Diego Bautista"
   date: "2/15/2024"
   chapters:
     - index.qmd

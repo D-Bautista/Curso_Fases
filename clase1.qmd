@@ -1,0 +1,9 @@
+# Construyendo un Hamiltoniano de amarre fuerte en Python
+
+
+
+```{python}
+import numpy as np 
+from pythtb import *
+```
+

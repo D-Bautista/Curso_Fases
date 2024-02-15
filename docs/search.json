@@ -2,23 +2,32 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Curso_Fases",
+    "title": "Notas del Curso de Fases Topológicas del PCF 2014",
     "section": "",
-    "text": "This is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+    "text": "Introducción a Python",
+    "crumbs": [
+      "Introducción a Python"
+    ]
   },
   {
     "objectID": "intro.html",
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "See Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "En este libro se expondrán las notas asociadas al curso de Fases Geométricas impartido en el Posgrado de Ciencias Físicas de la UNAM por el Dr. Alberto Martín, el Dr. Eduardo Barrios y el Dr. Luis Urrutia.\nAquí se muestran las notas relacionadas a la parte de programación.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
   },
   {
     "objectID": "summary.html",
     "href": "summary.html",
-    "title": "2  Summary",
+    "title": "2  Resumen",
     "section": "",
-    "text": "In summary, this book has no content whatsoever."
+    "text": "Los temas vistos son\n\nRepaso de Python\n\nsub-item 1\nsub-item 2\n\nsub-sub-item 1",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Resumen</span>"
+    ]
   },
   {
     "objectID": "references.html",
