@@ -1,9 +1,227 @@
-# Construyendo un Hamiltoniano de amarre fuerte en Python
+# Un breve repaso de Python
 
-
+En Python podemos definir varios tipos de número. Podemos, por ejemplo, escribi un número entero.
 
 ```{python}
-import numpy as np 
-from pythtb import *
+# Un número entero
+4
 ```
 
+También podemos definir números reales. Esto se puede hacer en forma decimal o en fracción.
+
+```{python}
+# Un número real decimal
+1.2
+```
+
+```{python}
+# Un número real como fracción
+1/5
+```
+
+Al escribir la fracción notamos que el resultado es un número real. Sin embargo, sabemos que es posible definir la divisón de modo que el resultado sea entero. Esto se logra como sigue:
+
+```{python}
+# División para números enteros
+2 // 3
+```
+
+En python se pueden hacer todas las operaciones entre números. 
+
+```{python}
+# Resta
+1 - 2
+```
+
+```{python}
+#Producto
+1 * 2
+```
+
+Las funciones en Python se evaluan usando paréntesis. Por ejemplo, debajo se muestra la función que hace del resultado de una operación un entero.
+
+```{python}
+# Ejemplo de uso de la función int
+int(3 + 1/2)
+```
+
+También podemos definir números complejos. Estos se logran escribiendo algo de la forma $a + bJ$. Debajo se muestra un ejemplo. Cabe resaltar es importante no dejar **ni un espacio** entre el número y J.
+
+```{python}
+# Número Complejo 
+1 + 2J
+```
+
+Cualquiera de estos números puede almacenarse en una variable. Por ejemplo, 
+
+```{python}
+# Almacenando un número en una variable 
+variable = 1 + 2J
+```
+
+Podemos aplicar una función directamente sobre una variable. Antes de ejemplificar esto, cargaremos las librerías que nos permiten hacer operaciones más complejas e introducir objetos matemáticos como vectores o matrices. Las librerías se importan debajo 
+
+```{python}
+# Se cargan las librerías que hacen python numérico
+from pylab import *
+```
+
+Por ejemplo, aplicamos la función de conjugar: 
+
+```{python}
+# Operación conjugación 
+conj(variable)
+```
+
+Un vector se define a través de entradas ordenadas. Por ejemplo, el vector $(1,0,0)^{\text{T}}$ se define como sigue
+
+```{python}
+# Definición de vector
+array([1,0,0])
+```
+Es importante usar la función array. De lo contrario, es imposible aplicar las operaciones conocidas sobre vectores.
+
+**OJO:** Por defecto los vectores en Python son vectores renglón. También podemos guardar los vectores en variables.
+
+```{python}
+# Almacenando dos vectores en variables
+v = array([1,2,3])
+w = array([4,5,6])
+```
+
+Gracias a que usé array a la hora de definir estos objetos, puedo sumarlos y restarlos como vectores: 
+
+```{python}
+# Suma de vectores
+v + w
+```
+```{python}
+# Resta de vectores
+v - w
+```
+
+Notemos que el resultado también es un array. En general, podemos comprobar que tipo de variable es un objeto usando la función type. En este caso, 
+
+```{python}
+# Ejemplo de función type 
+type( v )
+```
+
+```{python}
+# Ejemplo de función type 
+type(variable)
+```
+
+Otra operación importante es el producto punto. Esto se hace con la función dot().
+
+```{python}
+# Ejemplo de proucto punto
+dot( v,w )
+```
+
+En mecánica cuántica, sin embargo, no se usa el producto cartesiano usual. Se suele hacer el producto de un bra y un ket. Esto se hace con la función vdot. En el caso de vectores reales, dot y vdot son equivalentes. 
+
+```{python}
+# Ejemplo de vdot
+vdot( v, w )
+```
+
+También, podemos extrar la entrada de una posición del vector. Pero hay que tener en cuenta que Python empieza a **enumerar** en cero. 
+
+```{python}
+# Extraemos la primera entrada
+v[0]
+```
+
+```{python}
+# Extraemos la segunda entrada
+v[1]
+```
+
+Para definir una matriz, se usan corchetes dentro de corchetes. Cada corchete dentro del corchete representa un renglón. Por ejemplo, para constuir la matriz $$\begin{pmatrix} 1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9\end{pmatrix},$$ 
+usamos 
+```{python}
+# Definir una matriz con array
+A = array([[1,2,3],[4,5,6],[7,8,9]])
+```
+
+También se puede usar la función matrix.
+
+```{python}
+# Definir una matriz con array
+B = matrix([[1,2,3],[4,5,6],[7,8,9]])
+```
+
+Para obtener la transpuesta de una matriz $M$ usamos $M.T$. Esto sirve para ambas formas de definir una matriz . 
+
+```{python}
+# Definir una matriz con array
+A.T
+```
+
+```{python}
+# Definir una matriz con array
+B.T
+```
+
+Podemos transponer y conjugar también. En el caso de la definición de array, debemos hacer lo siguiente
+
+```{python}
+# Transponer y conjugar un array
+conj( A.T )
+```
+
+Para el objeto matrix, se puede usar $M.H$. Esto se muestra debajo, 
+
+```{python}
+# Operador daga en una matriz
+B.H
+```
+
+Podemos obtener el primer renglón de una matriz de la misma forma que se extraía el primer elemento de un vector. Esto funciona tanto para la definición array como la definición matrix.
+
+```{python}
+# Obtener un renglón de un array
+A[0]
+```
+
+```{python}
+# Obtener un renglón de una matriz
+B[0]
+```
+
+Hay una sutil diferencia en el tipo de objeto de salida. En el primer caso la salida es un vector, en el segundo la salida es una matriz hecha por un sólo renglón. Aparte de type, puedo usar la función shape para saber que tengo. 
+
+```{python}
+# Uso de función shape
+shape(A[0])
+```
+```{python}
+# Uso de función shape
+shape(B[0])
+```
+
+También, podemos extraer la primera columna. En el caso de la definición array, esto se hace como sigue:
+
+```{python}
+# Uso de función shape
+A.T[0]
+```
+
+Para la definición matrix, se usa lo mismo. 
+
+```{python}
+# Uso de función shape
+B.T[0]
+```
+
+De forma alternativa, podría usar lo siguiente para el caso de matrix:
+
+```{python}
+# Uso de función shape
+B[:,0]
+```
+
+Notemos que esta salida si se asemeja a un vector columna.
