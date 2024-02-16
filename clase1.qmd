@@ -225,3 +225,60 @@ B[:,0]
 ```
 
 Notemos que esta salida si se asemeja a un vector columna.
+
+También podemos definir funciones usando def nombredefunción(variables). Al final, se añaden dos puntos. Por ejemplo,
+
+```{python}
+# Definiendo una función
+def nombre(x):
+    # Dentro de una función pueden dejarse comentarios.
+    # Es usual dejar instrucciones de cálculo.
+    v = array([x,x,x])
+    return 2 * v
+```
+
+La función se aplica como cualquier otra. 
+
+```{python}
+# Usando la función
+nombre(2)
+```
+
+```{python}
+# Usando la función en otro objeto posible
+nombre( array([4,6]) )
+```
+
+Siempre es mejor pensar en funciones que reciben argumentos a la hora de tratar problemas.
+
+Finalmente, veamos ciclos de instrucciones. El primero es el ciclo for. Este ciclo recorre una colección de datos:
+
+```{python}
+# Ejempo ciclo for
+colección = array([6,7,8])
+
+for v in colección:
+    print(v)
+```
+
+El último for puede reducirse a una sola linea.
+
+```{python}
+# for en una linea
+[print(v) for v in colección]
+```
+
+La colección puede ser una matriz.
+
+```{python}
+# for en una linea
+for v in A:
+    print(v)
+```
+
+También puedo sacar los eigenvalores de una matriz. Si mi matriz es una matriz cualquiera, uso eigvals. Si mi matriz es hermítica, puedo usar eigvalsh.
+
+```{python}
+# Eigvals regresa los eigenvalores de una matriz sin ordenar. 
+eigvals(A)
+```
