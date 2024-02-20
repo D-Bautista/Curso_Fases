@@ -11,6 +11,7 @@ book:
     - intro.qmd
     - summary.qmd
     - clase1.qmd
+    - clase2.qmd
     - references.qmd
 
 bibliography: references.bib
