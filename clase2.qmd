@@ -1,6 +1,8 @@
-# Introducción a PythonTB
+# Hamiltinianos de amarre fuerte en Python
 
 El objetivo de esta clase es escribir Hamiltonianos en la aproximación de amarre fuerte y diagonalizarlo $$\hat{H} | \psi \rangle = E | \psi \rangle.$$ Recordemos que en esta aproximación, asumimos que podemos describir el hamiltoniano en términos de operadores de creación y aniquilación que actúan sobre los orbitales. Se asume que la interacción sólo es con vecinos cercanos. 
+
+## Descripción de un sistema de tres átomos 
 
 De esta forma, para un sistema de tres átomos que forman una cadena finita, por ejemplo, el estado de vacío es $$| \Omega \rangle = | 0,0,0\rangle$$ de modo que el operador $\hat{c}^{\dagger}_{1}$ es tal que  $$ \hat{c}^{\dagger}_{0} |\Omega \rangle = |1,0,0\rangle := |0 \rangle,$$ $$ \hat{c}^{\dagger}_{1} |\Omega \rangle = |0,1,0\rangle := |1 \rangle,$$ $$ \hat{c}^{\dagger}_{2} |\Omega \rangle = |0,0,1\rangle := |2 \rangle.$$ Con esta notación, podemos escribir los términos asociados a energías de sitio como $$\hat{c}^{\dagger}_{i} \hat{c}_{i} = |i\rangle \langle i |,$$ y los términos asociados a hoppings como $$\hat{c}^{\dagger}_{i} \hat{c}_{j} = |i\rangle \langle j |.$$ Dicho eso, el Hamiltoniano de amarre fuerte se escribe $$\hat{H} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + \text{h.c.} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + \text{h.c.} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + \text{h.c.}.$$
 
@@ -151,5 +153,52 @@ print(U)
 
 **En conclusión:** Usar array o matrix da la misma descripción para nuestros fines. 
 
+## Descripción de un triángulo
+
 Ahora supongamos que los átomos se ordenan en un triángulo. Esto implica que al Hamiltoniano se le añade una interacción entre el sitio $|0\rangle$ y el $|2\rangle$. En este caso, el hamiltoniano de amarre fuerte es $$\hat{H} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + t \hat{c}^{\dagger}_{0} \hat{c}_{2} + \text{h.c.}.$$
+
+Escribimos este hamiltoniano en código. 
+
+```{python}
+ket_cero = np.array([[1],[0],[0]])
+ket_uno  = np.array([[0],[1],[0]])
+ket_dos  = np.array([[0],[0],[1]])
+bra_cero = np.array([[1,0,0]]) 
+bra_uno  = np.array([[0,1,0]])
+bra_dos  = np.array([[0,0,1]])
+
+t = 1.0
+tc = conj(t)
+
+H = t*ket_cero*bra_uno + tc*ket_uno*bra_cero \
+  + t*ket_uno*bra_dos + tc*ket_dos*bra_uno   \
+  + t*ket_cero*bra_dos + tc*ket_dos*bra_cero
+
+print(H)
+```
+
+Para este caso, hay una degeneración de los eigenvalores. 
+
+```{python}
+eigvalsh(H)
+```
+
+¿A qué se debe la simetría? A que en este caso el sistema tiene una simetría $C_{3}$. El operador asociado a esa simetría en la base de orbitales localizados se ve como una permutación. $$R = \begin{pmatrix} 0 & 0 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0 \end{pmatrix}.$$ Corroboramos que esta matriz conmuta con el hamiltoniano. Para ello, definimos la matriz debajo 
+
+```{python}
+R = np.matrix([[0,0,1],[1,0,0],[0,1,0]])
+print(R)
+```
+Luego, aplicamos el conmutador 
+
+```{python}
+print(H * R - R * H)
+```
+
+**NOTA:** Para calcular el conmutador se usó el objeto matrix. Esto se debe a que a la hora de calcular productos de matrices de misma dimensión, la operación "*" se convierte en un producto entrada a entrada para objetos tipo array. Para objetos tipo matrix, "*" siempre denota producto matricial. 
+
+
+
 

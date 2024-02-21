@@ -1,0 +1,6 @@
+
+# Introducción a Python Tight-Binding
+
+Para ahorrarnos el proceso de escribir los hamiltonianos a mano, podemos usar la librería de pythtb. Esta nos permite definir un hamiltoniano de amarre fuerte si uno da de entrada los vectores de red, la posición de los orbitales y los hoppings. 
+
+## Hamiltoniano de amarre fuerte de un cristal cuadrado con campo magnético
