@@ -1,3 +1,155 @@
 # Introducción a PythonTB
 
-Ahora empezaremos a usar PythonTB. 
+El objetivo de esta clase es escribir Hamiltonianos en la aproximación de amarre fuerte y diagonalizarlo $$\hat{H} | \psi \rangle = E | \psi \rangle.$$ Recordemos que en esta aproximación, asumimos que podemos describir el hamiltoniano en términos de operadores de creación y aniquilación que actúan sobre los orbitales. Se asume que la interacción sólo es con vecinos cercanos. 
+
+De esta forma, para un sistema de tres átomos que forman una cadena finita, por ejemplo, el estado de vacío es $$| \Omega \rangle = | 0,0,0\rangle$$ de modo que el operador $\hat{c}^{\dagger}_{1}$ es tal que  $$ \hat{c}^{\dagger}_{0} |\Omega \rangle = |1,0,0\rangle := |0 \rangle,$$ $$ \hat{c}^{\dagger}_{1} |\Omega \rangle = |0,1,0\rangle := |1 \rangle,$$ $$ \hat{c}^{\dagger}_{2} |\Omega \rangle = |0,0,1\rangle := |2 \rangle.$$ Con esta notación, podemos escribir los términos asociados a energías de sitio como $$\hat{c}^{\dagger}_{i} \hat{c}_{i} = |i\rangle \langle i |,$$ y los términos asociados a hoppings como $$\hat{c}^{\dagger}_{i} \hat{c}_{j} = |i\rangle \langle j |.$$ Dicho eso, el Hamiltoniano de amarre fuerte se escribe $$\hat{H} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + \text{h.c.} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + \text{h.c.} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + \text{h.c.}.$$
+
+Ahora llevemos esto a Python, primero importamos las librerías. 
+
+```{python}
+from pylab import *
+```
+
+Podemos representar los distintos kets como vectores. Por ejemplo, para representar $|0 \rangle = |1,0,0\rangle$ usamos la siguiente celda. 
+
+```{python}
+ket_cero = np.matrix([[1],[0],[0]])
+print(ket_cero)
+```
+
+Hacemos lo mismo para representar $|1 \rangle = |0,1,0\rangle$, pero ahora hay que escribir un vector renglón. 
+
+```{python}
+bra_uno = np.matrix([[0,1,0]])
+print(bra_uno)
+```
+
+Ya una vez definidos los estados, creamos el operador con el producto $|0\rangle \langle 1 |$. Esto se hace con el producto de matrices. Para objetos del tipo matrix, esto se consigue con el símbolo *: 
+
+```{python}
+ket_cero * bra_uno
+```
+
+Podemos constuir el conjugado. Para ello definimos los conjugados de los bras y kets definidos y hacemos el producto matricial entre ellos. Vemos que en efecto el resultado es la matriz hermítica a la obtenida previamente.
+
+```{python}
+ket_uno = np.matrix([[0],[1],[0]])
+bra_cero = np.matrix([[1,0,0]])
+
+ket_uno * bra_cero
+```
+
+Terminamos de definir el resto de los estados.
+
+```{python}
+ket_dos = np.matrix([[0],[0],[1]])
+bra_uno = np.matrix([[0,1,0]])
+
+ket_dos * bra_uno
+```
+
+```{python}
+ket_uno = np.matrix([[0],[1],[0]])
+bra_dos = np.matrix([[0,0,1]])
+
+ket_uno * bra_dos
+```
+
+Ya con todos los estaods definidos, podemos construir nuestro hamiltoniano de amarre fuerte. $$\hat{H} = t |0 \rangle \langle 1| + t^{*}|1 \rangle \langle 0| + t|1 \rangle \langle 2| + t^{*}|2 \rangle \langle 1|$$
+ Se definirán todos los estados de nuevo por completez, pero esto no es necesario. 
+
+```{python}
+ket_cero = np.matrix([[1],[0],[0]])
+ket_uno  = np.matrix([[0],[1],[0]])
+ket_dos  = np.matrix([[0],[0],[1]])
+bra_cero = np.matrix([[1,0,0]])
+bra_uno  = np.matrix([[0,1,0]])
+bra_dos  = np.matrix([[0,0,1]])
+
+#definimos el hopping
+
+t = 1.0
+tc = conj(t)
+
+H = t*ket_cero*bra_uno + tc*ket_uno*bra_cero \
+  + t*ket_dos*bra_uno + tc*ket_uno*bra_dos
+
+print(H)
+```
+
+De este operador, podemos sacar los eigenvalores y eigenvectores.
+
+```{python}
+E,U = eigh(H)
+```
+Los eigenvalores se almacenan en E, los eigenvectores en U:
+
+```{python}
+print(E)
+```
+
+```{python}
+print(U)
+```
+
+Notamos que en U están los eigenvectores como **columnas**. Para ver eso, hacemos el producto de H con la primer columna y dividimos por el eigenvalor. El resultado es el vector original: 
+
+```{python}
+v = np.matrix([[-5.00000000e-01],[7.07106781e-01],[-5.00000000e-01]])
+
+print(H*v/-1.41421356e+00)
+```
+
+Extraemos un eigenvalor y su eigenvalor asociado. Para ello, hay que tener cuidado de trasponer la matriz antes de extraer el vector. 
+
+```{python}
+E0 = E[0]
+v0 = (U.T[0]).T
+print(v0)
+```
+
+Para detalles técnicos, hacemos lo mismo pero usando array en vez de matrix. 
+
+```{python}
+ket_uno  = np.array([[0],[1],[0]])
+bra_cero = np.array([[1,0,0]]) 
+
+print(ket_uno)
+print(bra_cero)
+```
+
+Hasta ahora todo se ve igual. Lo mismo pasa al hacer el producto.
+
+
+```{python}
+ket_cero = np.array([[1],[0],[0]])
+ket_uno  = np.array([[0],[1],[0]])
+ket_dos  = np.array([[0],[0],[1]])
+bra_cero = np.array([[1,0,0]]) 
+bra_uno  = np.array([[0,1,0]])
+bra_dos  = np.array([[0,0,1]])
+
+t = 1.0
+tc = conj(t)
+
+H = t*ket_cero*bra_uno + tc*ket_uno*bra_cero \
+  + t*ket_dos*bra_uno + tc*ket_uno*bra_dos
+
+print(H)
+```
+
+Los eigenvectores y eigenvalores se sacan de la misma forma.
+
+```{python}
+E,U = eigh(H)
+```
+
+```{python}
+print(E)
+print(U)
+```
+
+**En conclusión:** Usar array o matrix da la misma descripción para nuestros fines. 
+
+Ahora supongamos que los átomos se ordenan en un triángulo. Esto implica que al Hamiltoniano se le añade una interacción entre el sitio $|0\rangle$ y el $|2\rangle$. En este caso, el hamiltoniano de amarre fuerte es $$\hat{H} = t \hat{c}^{\dagger}_{1} \hat{c}_{0} + t \hat{c}^{\dagger}_{2} \hat{c}_{1} + t \hat{c}^{\dagger}_{0} \hat{c}_{2} + \text{h.c.}.$$
+
