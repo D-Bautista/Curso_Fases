@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 book:
-  title: "Notas del Curso de Fases Topológicas del PCF 2014"
+  title: "Notas del Curso de Fases Topológicas del PCF 2024"
   author: "Diego Bautista"
   date: "2/15/2024"
   chapters:

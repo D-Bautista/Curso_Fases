@@ -4,3 +4,45 @@
 Para ahorrarnos el proceso de escribir los hamiltonianos a mano, podemos usar la librería de pythtb. Esta nos permite definir un hamiltoniano de amarre fuerte si uno da de entrada los vectores de red, la posición de los orbitales y los hoppings. 
 
 ## Hamiltoniano de amarre fuerte de un cristal cuadrado con campo magnético
+
+Buscamos describir una red cuadrada sobre la que actúa un campo magnético. Una red se define mediante dos vectores base $\vec{a}_{1},\vec{a}_{2}$. Explítamente, una red es igual al conjunto de puntos de la forma $$\vec{R} = n_{1} \vec{a}_{1} + n_{2}\vec{a}_{2},$$ donde $n_{i} \in \mathbb{Z}$. Imaginamos que sobre cada punto de la red hay un orbital. A cada enlace entre dos órbitales le asociamos un hopping $t$. Usualmente, sólo damos hoppings no nulos a los vecinos cercanos. 
+
+PythTB nos permite implementar cada uno de estos ingredientes en un código. 
+
+```{python}
+from pylab import *
+from pythtb import *
+```
+
+Primero, definimos los vectores base y los guardamos dentro de la variable *vectoresRed*. Posteriormente, definimos el sitio de los orbitales de nuestra red. La posición de los orbitales debe ser una combinación lineal de los vectores base. En este caso, para poner el orbital sobre los puntos de red la posición del orbital debe ser $\vec{S} = 0 \cdot\vec{a}_{1} + 0\cdot\vec{a}_{2}$. Guardamos la posición del orbital en la variable sitio. Usualmente, habrá más de un órbital. Luego de definir la posición de todos los orbitales, debemos guardar sus posiciones en un nuevo array. En este modelo, sólo hay un orbital, pero lo guardamos en una lista llamada *orbitales* aparte para prepararnos al caso en que haya más orbitales. 
+
+Ya con esto listo podemos definir un objeto *tb_model*. La entrada a este modelo son la dimensión del espacio k, la dimensión del espacio r, los vectores de red y la lista con la posición de los orbitales. Ya hecho el modelo, podemos añadir hoppings. Para ello se usa el método *set_hop*. Este método recibe el valor del hopping, el índice del primer orbital del enalce (en este caso sólo hay un orbital cuyo índice es $i = 0$), el índice del segundo orbital en el enlace y el vector de red que apunta a la celda del segundo orbital. 
+
+Para ver que los hoppings se hayan puesto bien usamos el método *visualize* sobre nuestro modelo. La entrada de este método es sobre que vectores base se hará la visualización. En este caso sólo hay dos vectores y por ello ponemos $(0,1)$.
+
+Notamos que por default pythtb añade los hoppings conjugados. 
+
+
+```{python}
+a1  = array([1,0])
+a2  = array([0,1])
+
+vectoresRed = array([a1,a2]) #0*a1 + 0*a2
+
+sitio = array([0,0]) #Sitio del orbital
+
+orbitales = array([sitio]) #Lista con todos los itios. 
+
+# Definimos el Hamiltoniano de amarre fuerte.
+cuadrada = tb_model(2,2, vectoresRed, orbitales)
+
+#Definimos los hoppings.
+t = 0
+cuadrada.set_hop(t,0,0,[1,0])
+# Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2
+cuadrada.set_hop(t,0,0,[0,1])
+# Enlace entre orbital 0 y orbital 0 desplazo por 0*a1 + 1*a2
+
+cuadrada.visualize(0,1)
+# (0,1) significa en la dirección de a1 y a2. 
+```
