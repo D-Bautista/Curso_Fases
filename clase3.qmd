@@ -83,3 +83,26 @@ eigenvalores = cuadrada_cortada_cortada.solve_all()
 print(eigenvalores)
 ```
 
+Otra función útil es la función *display*. Esta imprime todos los hoppings, i.e., imprime el Hamiltoniano. Además, la función da más información útil. 
+ 
+```{python}
+cuadrada_cortada_cortada.display()
+```
+
+También podemos obtener el hamiltoniano directamente usando *._gen_ham()*. Esto se muestra debajo 
+
+```{python}
+cuadrada_cortada_cortada._gen_ham()
+```
+
+Otra información que podemos obtener son las posiciones, esto se hace con *get.lat*
+
+```{python}
+X,Y = dot( cuadrada_cortada_cortada.get_orb(),cuadrada_cortada_cortada.get_lat()).T
+
+scatter(X,Y)
+```
+
+
+La función *solve_all* es aún más general. 
+
