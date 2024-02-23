@@ -29,7 +29,7 @@ a2  = array([0,1])
 
 vectoresRed = array([a1,a2]) #0*a1 + 0*a2
 
-sitio = array([0,0]) #Sitio del orbital
+sitio = array([1/2,1/2]) #Sitio del orbital
 
 orbitales = array([sitio]) #Lista con todos los itios. 
 
@@ -37,7 +37,7 @@ orbitales = array([sitio]) #Lista con todos los itios.
 cuadrada = tb_model(2,2, vectoresRed, orbitales)
 
 #Definimos los hoppings.
-t = 0
+t = 1
 cuadrada.set_hop(t,0,0,[1,0])
 # Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2
 cuadrada.set_hop(t,0,0,[0,1])
@@ -46,3 +46,40 @@ cuadrada.set_hop(t,0,0,[0,1])
 cuadrada.visualize(0,1)
 # (0,1) significa en la dirección de a1 y a2. 
 ```
+
+También podemos crear superceldas, i.e., repeticiones de una celda unitaria. Para ello usamos la función *make_supercell*. La entrada de la celda es la modificación sobre los vectores de red.
+
+```{python}
+cuadrada_grande = cuadrada.make_supercell([[10,5],[0,10]])
+# [10,0] significa que el nuevo vector 1 es 10*a1 + 0*a2
+# [0,10] significa que el nuevo vector 2 es 0*a1 + 10*a2
+
+cuadrada_grande.visualize(0,1)
+```
+
+De la supercelda podemos cortar y hacer finita la celda en una dimensión. La entrada del vector Para ello usamos *cut_piece*. 
+
+```{python}
+cuadrada_cortada = cuadrada_grande.cut_piece(2,1)
+# El (1,0) es cortar 1 vez en el vector a1. En a2 sigue siemdo finito. 
+cuadrada_cortada.visualize(0,1)
+```
+
+Si aplicamos *cut_piece* dos veces podemos obtener un sistema finito. 
+
+```{python}
+cuadrada_cortada_cortada = cuadrada_cortada.cut_piece(1,0)
+# El (0,2) es cortar 2 vez en el vector a1. En a2 sigue siemdo finito. 
+cuadrada_cortada_cortada.visualize(0,1)
+```
+
+A este sistema finito podemos extraerle los eigenvalores usando *solve_all*.  
+
+```{python}
+eigenvalores = cuadrada_cortada_cortada.solve_all()
+```
+
+```{python}
+print(eigenvalores)
+```
+

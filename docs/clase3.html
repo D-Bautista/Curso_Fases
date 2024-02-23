@@ -252,7 +252,7 @@ window.Quarto = {
 <h2 data-number="6.1" class="anchored" data-anchor-id="hamiltoniano-de-amarre-fuerte-de-un-cristal-cuadrado-con-campo-magnético"><span class="header-section-number">6.1</span> Hamiltoniano de amarre fuerte de un cristal cuadrado con campo magnético</h2>
 <p>Buscamos describir una red cuadrada sobre la que actúa un campo magnético. Una red se define mediante dos vectores base <span class="math inline">\(\vec{a}_{1},\vec{a}_{2}\)</span>. Explítamente, una red es igual al conjunto de puntos de la forma <span class="math display">\[\vec{R} = n_{1} \vec{a}_{1} + n_{2}\vec{a}_{2},\]</span> donde <span class="math inline">\(n_{i}&nbsp;\in \mathbb{Z}\)</span>. Imaginamos que sobre cada punto de la red hay un orbital. A cada enlace entre dos órbitales le asociamos un hopping <span class="math inline">\(t\)</span>. Usualmente, sólo damos hoppings no nulos a los vecinos cercanos.</p>
 <p>PythTB nos permite implementar cada uno de estos ingredientes en un código.</p>
-<div id="34e7855a" class="cell" data-execution_count="1">
+<div id="169d405a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pythtb <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -260,13 +260,13 @@ window.Quarto = {
 <p>Ya con esto listo podemos definir un objeto <em>tb_model</em>. La entrada a este modelo son la dimensión del espacio k, la dimensión del espacio r, los vectores de red y la lista con la posición de los orbitales. Ya hecho el modelo, podemos añadir hoppings. Para ello se usa el método <em>set_hop</em>. Este método recibe el valor del hopping, el índice del primer orbital del enalce (en este caso sólo hay un orbital cuyo índice es <span class="math inline">\(i = 0\)</span>), el índice del segundo orbital en el enlace y el vector de red que apunta a la celda del segundo orbital.</p>
 <p>Para ver que los hoppings se hayan puesto bien usamos el método <em>visualize</em> sobre nuestro modelo. La entrada de este método es sobre que vectores base se hará la visualización. En este caso sólo hay dos vectores y por ello ponemos <span class="math inline">\((0,1)\)</span>.</p>
 <p>Notamos que por default pythtb añade los hoppings conjugados.</p>
-<div id="85798369" class="cell" data-execution_count="2">
+<div id="3ad856b1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>a1  <span class="op">=</span> array([<span class="dv">1</span>,<span class="dv">0</span>])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a2  <span class="op">=</span> array([<span class="dv">0</span>,<span class="dv">1</span>])</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>vectoresRed <span class="op">=</span> array([a1,a2]) <span class="co">#0*a1 + 0*a2</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sitio <span class="op">=</span> array([<span class="dv">0</span>,<span class="dv">0</span>]) <span class="co">#Sitio del orbital</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sitio <span class="op">=</span> array([<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>]) <span class="co">#Sitio del orbital</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>orbitales <span class="op">=</span> array([sitio]) <span class="co">#Lista con todos los itios. </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -274,7 +274,7 @@ window.Quarto = {
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>cuadrada <span class="op">=</span> tb_model(<span class="dv">2</span>,<span class="dv">2</span>, vectoresRed, orbitales)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Definimos los hoppings.</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">1</span>,<span class="dv">0</span>])</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">0</span>,<span class="dv">1</span>])</span>
@@ -288,6 +288,90 @@ window.Quarto = {
 <p><img src="clase3_files/figure-html/cell-3-output-1.png" width="578" height="559" class="figure-img"></p>
 </figure>
 </div>
+</div>
+</div>
+<p>También podemos crear superceldas, i.e., repeticiones de una celda unitaria. Para ello usamos la función <em>make_supercell</em>. La entrada de la celda es la modificación sobre los vectores de red.</p>
+<div id="a0c310e7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cuadrada_grande <span class="op">=</span> cuadrada.make_supercell([[<span class="dv">10</span>,<span class="dv">5</span>],[<span class="dv">0</span>,<span class="dv">10</span>]])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [10,0] significa que el nuevo vector 1 es 10*a1 + 0*a2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [0,10] significa que el nuevo vector 2 es 0*a1 + 10*a2</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>cuadrada_grande.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase3_files/figure-html/cell-4-output-1.png" width="576" height="559" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>De la supercelda podemos cortar y hacer finita la celda en una dimensión. La entrada del vector Para ello usamos <em>cut_piece</em>.</p>
+<div id="67d16042" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada <span class="op">=</span> cuadrada_grande.cut_piece(<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El (1,0) es cortar 1 vez en el vector a1. En a2 sigue siemdo finito. </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase3_files/figure-html/cell-5-output-1.png" width="563" height="559" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Si aplicamos <em>cut_piece</em> dos veces podemos obtener un sistema finito.</p>
+<div id="a94fdbff" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada <span class="op">=</span> cuadrada_cortada.cut_piece(<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El (0,2) es cortar 2 vez en el vector a1. En a2 sigue siemdo finito. </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase3_files/figure-html/cell-6-output-1.png" width="563" height="559" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A este sistema finito podemos extraerle los eigenvalores usando <em>solve_all</em>.</p>
+<div id="ef2bded0" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>eigenvalores <span class="op">=</span> cuadrada_cortada_cortada.solve_all()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f4d1d3f4" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eigenvalores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-3.89411762 -3.82175882 -3.71036166 -3.65779542 -3.57679156 -3.57131144
+ -3.43806795 -3.41566518 -3.29027691 -3.25154691 -3.24363459 -3.1964165
+ -3.09442761 -3.0355232  -3.02371054 -2.90542867 -2.82337477 -2.81583896
+ -2.79575361 -2.73413089 -2.65383481 -2.63876333 -2.57075866 -2.54540419
+ -2.45123791 -2.41984602 -2.31265393 -2.30655581 -2.25451887 -2.24752721
+ -2.17959015 -2.14341664 -2.0866075  -2.04617036 -2.0253331  -1.94225044
+ -1.91246666 -1.87261574 -1.77730082 -1.76234663 -1.72928552 -1.6895984
+ -1.6488729  -1.63744382 -1.57787293 -1.56380742 -1.49318634 -1.48568002
+ -1.43921542 -1.39835991 -1.34676506 -1.32473385 -1.2334557  -1.21176054
+ -1.20839887 -1.16005534 -1.1458142  -1.08947669 -1.07294358 -1.04274481
+ -1.01953288 -0.94478036 -0.94214863 -0.90828408 -0.88795898 -0.83268373
+ -0.81969656 -0.78317441 -0.6924565  -0.69192649 -0.67593268 -0.66646876
+ -0.630465   -0.60212066 -0.57112216 -0.56513183 -0.53132837 -0.51453263
+ -0.44844607 -0.43289356 -0.3763432  -0.37245799 -0.35154158 -0.3445604
+ -0.32042297 -0.29418364 -0.28654511 -0.24086137 -0.22858975 -0.19228502
+ -0.13659798 -0.13269269 -0.12107344 -0.11697869 -0.11611335 -0.08064552
+ -0.07441008 -0.06016294 -0.04582081 -0.01538296  0.01538296  0.04582081
+  0.06016294  0.07441008  0.08064552  0.11611335  0.11697869  0.12107344
+  0.13269269  0.13659798  0.19228502  0.22858975  0.24086137  0.28654511
+  0.29418364  0.32042297  0.3445604   0.35154158  0.37245799  0.3763432
+  0.43289356  0.44844607  0.51453263  0.53132837  0.56513183  0.57112216
+  0.60212066  0.630465    0.66646876  0.67593268  0.69192649  0.6924565
+  0.78317441  0.81969656  0.83268373  0.88795898  0.90828408  0.94214863
+  0.94478036  1.01953288  1.04274481  1.07294358  1.08947669  1.1458142
+  1.16005534  1.20839887  1.21176054  1.2334557   1.32473385  1.34676506
+  1.39835991  1.43921542  1.48568002  1.49318634  1.56380742  1.57787293
+  1.63744382  1.6488729   1.6895984   1.72928552  1.76234663  1.77730082
+  1.87261574  1.91246666  1.94225044  2.0253331   2.04617036  2.0866075
+  2.14341664  2.17959015  2.24752721  2.25451887  2.30655581  2.31265393
+  2.41984602  2.45123791  2.54540419  2.57075866  2.63876333  2.65383481
+  2.73413089  2.79575361  2.81583896  2.82337477  2.90542867  3.02371054
+  3.0355232   3.09442761  3.1964165   3.24363459  3.25154691  3.29027691
+  3.41566518  3.43806795  3.57131144  3.57679156  3.65779542  3.71036166
+  3.82175882  3.89411762]</code></pre>
 </div>
 </div>
 
