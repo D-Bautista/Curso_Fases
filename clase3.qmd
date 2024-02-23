@@ -103,6 +103,14 @@ X,Y = dot( cuadrada_cortada_cortada.get_orb(),cuadrada_cortada_cortada.get_lat()
 scatter(X,Y)
 ```
 
+Podemos graficar los eigenvalores del sistema. 
+
+```{python}
+for n in range(len(eigenvalores)):
+    plot([0,1],[eigenvalores[n],eigenvalores[n]], c='k',alpha = 0.2)
+xlim(-4,4)
+```
+
 
 La función *solve_all* es aún más general. 
 

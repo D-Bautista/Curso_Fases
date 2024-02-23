@@ -252,7 +252,7 @@ window.Quarto = {
 <h2 data-number="6.1" class="anchored" data-anchor-id="hamiltoniano-de-amarre-fuerte-de-un-cristal-cuadrado-con-campo-magnético"><span class="header-section-number">6.1</span> Hamiltoniano de amarre fuerte de un cristal cuadrado con campo magnético</h2>
 <p>Buscamos describir una red cuadrada sobre la que actúa un campo magnético. Una red se define mediante dos vectores base <span class="math inline">\(\vec{a}_{1},\vec{a}_{2}\)</span>. Explítamente, una red es igual al conjunto de puntos de la forma <span class="math display">\[\vec{R} = n_{1} \vec{a}_{1} + n_{2}\vec{a}_{2},\]</span> donde <span class="math inline">\(n_{i}&nbsp;\in \mathbb{Z}\)</span>. Imaginamos que sobre cada punto de la red hay un orbital. A cada enlace entre dos órbitales le asociamos un hopping <span class="math inline">\(t\)</span>. Usualmente, sólo damos hoppings no nulos a los vecinos cercanos.</p>
 <p>PythTB nos permite implementar cada uno de estos ingredientes en un código.</p>
-<div id="17a14680" class="cell" data-execution_count="1">
+<div id="66dc61cb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pythtb <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -260,7 +260,7 @@ window.Quarto = {
 <p>Ya con esto listo podemos definir un objeto <em>tb_model</em>. La entrada a este modelo son la dimensión del espacio k, la dimensión del espacio r, los vectores de red y la lista con la posición de los orbitales. Ya hecho el modelo, podemos añadir hoppings. Para ello se usa el método <em>set_hop</em>. Este método recibe el valor del hopping, el índice del primer orbital del enalce (en este caso sólo hay un orbital cuyo índice es <span class="math inline">\(i = 0\)</span>), el índice del segundo orbital en el enlace y el vector de red que apunta a la celda del segundo orbital.</p>
 <p>Para ver que los hoppings se hayan puesto bien usamos el método <em>visualize</em> sobre nuestro modelo. La entrada de este método es sobre que vectores base se hará la visualización. En este caso sólo hay dos vectores y por ello ponemos <span class="math inline">\((0,1)\)</span>.</p>
 <p>Notamos que por default pythtb añade los hoppings conjugados.</p>
-<div id="df1ea384" class="cell" data-execution_count="2">
+<div id="694a8ea2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>a1  <span class="op">=</span> array([<span class="dv">1</span>,<span class="dv">0</span>])</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a2  <span class="op">=</span> array([<span class="dv">0</span>,<span class="dv">1</span>])</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -291,7 +291,7 @@ window.Quarto = {
 </div>
 </div>
 <p>También podemos crear superceldas, i.e., repeticiones de una celda unitaria. Para ello usamos la función <em>make_supercell</em>. La entrada de la celda es la modificación sobre los vectores de red.</p>
-<div id="b8d89bf9" class="cell" data-execution_count="3">
+<div id="b3a70f09" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cuadrada_grande <span class="op">=</span> cuadrada.make_supercell([[<span class="dv">10</span>,<span class="dv">5</span>],[<span class="dv">0</span>,<span class="dv">10</span>]])</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [10,0] significa que el nuevo vector 1 es 10*a1 + 0*a2</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [0,10] significa que el nuevo vector 2 es 0*a1 + 10*a2</span></span>
@@ -306,7 +306,7 @@ window.Quarto = {
 </div>
 </div>
 <p>De la supercelda podemos cortar y hacer finita la celda en una dimensión. La entrada del vector Para ello usamos <em>cut_piece</em>.</p>
-<div id="542ac53c" class="cell" data-execution_count="4">
+<div id="cb175b7e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada <span class="op">=</span> cuadrada_grande.cut_piece(<span class="dv">2</span>,<span class="dv">1</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El (1,0) es cortar 1 vez en el vector a1. En a2 sigue siemdo finito. </span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -319,7 +319,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Si aplicamos <em>cut_piece</em> dos veces podemos obtener un sistema finito.</p>
-<div id="1cfc80f0" class="cell" data-execution_count="5">
+<div id="b8264893" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada <span class="op">=</span> cuadrada_cortada.cut_piece(<span class="dv">1</span>,<span class="dv">0</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># El (0,2) es cortar 2 vez en el vector a1. En a2 sigue siemdo finito. </span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -332,10 +332,10 @@ window.Quarto = {
 </div>
 </div>
 <p>A este sistema finito podemos extraerle los eigenvalores usando <em>solve_all</em>.</p>
-<div id="c54c43b3" class="cell" data-execution_count="6">
+<div id="9f2c7f28" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>eigenvalores <span class="op">=</span> cuadrada_cortada_cortada.solve_all()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="376cb6e9" class="cell" data-execution_count="7">
+<div id="b5257589" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(eigenvalores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[-3.89411762 -3.82175882 -3.71036166 -3.65779542 -3.57679156 -3.57131144
@@ -375,7 +375,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Otra función útil es la función <em>display</em>. Esta imprime todos los hoppings, i.e., imprime el Hamiltoniano. Además, la función da más información útil.</p>
-<div id="ad2c2bae" class="cell" data-execution_count="8">
+<div id="9d07369c" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada.display()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>---------------------------------------
@@ -1528,9 +1528,9 @@ hopping distances:
 </div>
 </div>
 <p>También podemos obtener el hamiltoniano directamente usando <em>._gen_ham()</em>. Esto se muestra debajo</p>
-<div id="01412bc2" class="cell" data-execution_count="9">
+<div id="66f79c8a" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cuadrada_cortada_cortada._gen_ham()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="53">
 <pre><code>array([[0.+0.j, 1.+0.j, 0.+0.j, ..., 0.+0.j, 0.+0.j, 0.+0.j],
        [1.+0.j, 0.+0.j, 1.+0.j, ..., 0.+0.j, 0.+0.j, 0.+0.j],
        [0.+0.j, 1.+0.j, 0.+0.j, ..., 0.+0.j, 0.+0.j, 0.+0.j],
@@ -1541,7 +1541,7 @@ hopping distances:
 </div>
 </div>
 <p>Otra información que podemos obtener son las posiciones, esto se hace con <em>get.lat</em></p>
-<div id="18017a9a" class="cell" data-execution_count="10">
+<div id="62a7b994" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>X,Y <span class="op">=</span> dot( cuadrada_cortada_cortada.get_orb(),cuadrada_cortada_cortada.get_lat()).T</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>scatter(X,Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1549,6 +1549,19 @@ hopping distances:
 <div>
 <figure class="figure">
 <p><img src="clase3_files/figure-html/cell-11-output-1.png" width="566" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos graficar los eigenvalores del sistema.</p>
+<div id="cd85ae16" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(eigenvalores)):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    plot([<span class="dv">0</span>,<span class="dv">1</span>],[eigenvalores[n],eigenvalores[n]], c<span class="op">=</span><span class="st">'k'</span>,alpha <span class="op">=</span> <span class="fl">0.2</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>xlim(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase3_files/figure-html/cell-12-output-1.png" width="573" height="411" class="figure-img"></p>
 </figure>
 </div>
 </div>
