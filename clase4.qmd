@@ -1,0 +1,95 @@
+# Implementación del campo magnético
+
+En esta clase implementaremos la acción de un campo magnético perpendicular a nuestro material. 
+
+```{python}
+from pylab import *
+from pythtb import *
+```
+
+## Visualización de los niveles de energía
+
+Utilizamos el Hamiltoniano que usamos la clase pasada.
+
+```{python}
+a1  = array([1,0])
+a2  = array([0,1])
+
+vectoresRed = array([a1,a2]) #0*a1 + 0*a2
+
+sitio = array([1/2,1/2]) #Sitio del orbital
+
+orbitales = array([sitio]) #Lista con todos los itios. 
+
+# Definimos el Hamiltoniano de amarre fuerte.
+cuadrada = tb_model(2,2, vectoresRed, orbitales)
+
+#Definimos los hoppings.
+t = 1
+cuadrada.set_hop(t,0,0,[1,0])
+# Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2
+cuadrada.set_hop(t,0,0,[0,-1])
+# Enlace entre orbital 0 y orbital 0 desplazo por 0*a1 + 1*a2
+
+cuadrada.visualize(0,1)
+# (0,1) significa en la dirección de a1 y a2. 
+```
+
+Para obtener la estructura de bandas, debemos tomar un camino en el espacio recíproco. PythTB sabe crear un camino si se le dan de entrada puntos que definen el camino en la base del espacio recíproco. Debajo, definimos dichos puntos y usamos la función *k_path*. Esta función toma como entrada la serie de puntos que define el camino y el número de puntosa tomar. Luego, podemos usar la función *solve_all* usando como entrada el k_vec obtenido. 
+
+```{python}
+PuntosaRecorrer = [[0,0], # 0 * b1 + 0 * b2
+                   [1/2,0], # 1/2 * b1 + 0 * b2
+                    [1/2,1/2]] # 1/2 * b1 + 1/2 * b2
+
+# Una vez dados los puntos, podemos 
+k_vec,k_dist,k_node = cuadrada.k_path(PuntosaRecorrer,1001)
+
+
+Ek = cuadrada.solve_all(k_vec)
+```
+
+```{python}
+""" Ek tiene forma (nband,kpoints), donde nband es el número de bandas y kpoints el número de puntos k
+en el camino usado. Por eso debemos trasponer, para 
+tener una gráfica donde se grafiquen puntos k vs los 
+1001 valores de energía. 
+"""
+plot(k_dist,Ek.T)
+```
+
+```{python}
+# Una alternativa a trasponer es tomar el renglón cero.
+plot(k_dist,Ek[0])
+```
+
+Para dar más estilo a esta gráfica recurrimos a la variable k_node. Esta variable contiene que valor entre 0 y 1 corresponde a cada uno de los puntos usados. Por ello, podemos usar k_node como ticks. 
+
+```{python}
+# Una alternativa a trasponer es tomar el renglón cero.
+print(k_node)
+```
+
+Haciendo eso, tenemos lo siguiente 
+
+```{python}
+# Una alternativa a trasponer es tomar el renglón cero.
+plot(k_dist,Ek[0])
+xticks(k_node, labels = ["$ \Gamma $","X","XY"])
+```
+
+Ya viendo como graficar las bandas, podemos proceder a añadir el campo magnético. Para ello, partimos del potencial vector $$\vec{A} = \left(-By,0,0\right) \Longrightarrow \vec{B} = B \hat{e}_{z}.$$ La forma de añadir el campo magnético es mediante la substitución de Peierls $$t_{\vec{A}}^{i \rightarrow j} = t_{\vec{A} = \vec{0}}^{i \rightarrow j}\exp\left[\frac{iq}{h}\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r}\right].$$
+
+El primer enlace va de $\vec{r}_{i} = [0,0]$ a $\vec{r}_{j} = [0,1]$. En este caso $$\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r} = - B\frac{y_{i} + y_{j}}{2}(x_{j} - x_{i}).$$
+
+::: {.callout-important}
+## Elección del potencial vector
+
+A la hora de elegir el potencial vector debemos tener cuidado con que este cumpla las condiciones de frontera. Es decir, si el sistema es periódico en $x$, por ejemplo, el potencial vector debe ser periódico en $x$. 
+:::
+
+En este caso, tomaremos un sistema que **es periódico en dirección x** con tal de que nuestro potencial $\vec{A}$ pueda describir el sistema. 
+
+```{python}
+sc = cuadrada.cut_piece([[1,0],[0,1]])
+```

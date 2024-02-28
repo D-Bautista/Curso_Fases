@@ -50,7 +50,7 @@ cuadrada.visualize(0,1)
 También podemos crear superceldas, i.e., repeticiones de una celda unitaria. Para ello usamos la función *make_supercell*. La entrada de la celda es la modificación sobre los vectores de red.
 
 ```{python}
-cuadrada_grande = cuadrada.make_supercell([[10,5],[0,10]])
+cuadrada_grande = cuadrada.make_supercell([[10,2],[0,10]])
 # [10,0] significa que el nuevo vector 1 es 10*a1 + 0*a2
 # [0,10] significa que el nuevo vector 2 es 0*a1 + 10*a2
 
@@ -112,5 +112,5 @@ xlim(-4,4)
 ```
 
 
-La función *solve_all* es aún más general. 
+La función *solve_all* es aún más general. Luego será utilizada para resolver eigenvalores en sistemas periódicos. 
 
