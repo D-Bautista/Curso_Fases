@@ -91,5 +91,5 @@ A la hora de elegir el potencial vector debemos tener cuidado con que este cumpl
 En este caso, tomaremos un sistema que **es periódico en dirección x** con tal de que nuestro potencial $\vec{A}$ pueda describir el sistema. 
 
 ```{python}
-sc = cuadrada.cut_piece([[1,0],[0,1]])
+sc = cuadrada.make_supercell([[1,2],[0,2]])
 ```
