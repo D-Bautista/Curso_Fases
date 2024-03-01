@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notas del Curso de Fases Topológicas del PCF 2014 - 4&nbsp; Un breve repaso de Python</title>
+<title>Notas del Curso de Fases Topológicas del PCF 2024 - 4&nbsp; Un breve repaso de Python</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -159,7 +159,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notas del Curso de Fases Topológicas del PCF 2014</a> 
+      <a href="./">Notas del Curso de Fases Topológicas del PCF 2024</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -196,7 +196,19 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./clase2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducción a PythonTB</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hamiltinianos de amarre fuerte en Python</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./clase3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introducción a Python Tight-Binding</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./clase4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Implementación del campo magnético</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -236,7 +248,7 @@ window.Quarto = {
 
 
 <p>En Python podemos definir varios tipos de número. Podemos, por ejemplo, escribi un número entero.</p>
-<div id="55c709c4" class="cell" data-execution_count="1">
+<div id="997f8e77" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Un número entero</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -244,14 +256,14 @@ window.Quarto = {
 </div>
 </div>
 <p>También podemos definir números reales. Esto se puede hacer en forma decimal o en fracción.</p>
-<div id="810cf713" class="cell" data-execution_count="2">
+<div id="a50dbcad" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Un número real decimal</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>1.2</code></pre>
 </div>
 </div>
-<div id="9649241a" class="cell" data-execution_count="3">
+<div id="40358513" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Un número real como fracción</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="op">/</span><span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -259,7 +271,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Al escribir la fracción notamos que el resultado es un número real. Sin embargo, sabemos que es posible definir la divisón de modo que el resultado sea entero. Esto se logra como sigue:</p>
-<div id="40fe4d0f" class="cell" data-execution_count="4">
+<div id="a2ddb3fb" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># División para números enteros</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">//</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -267,14 +279,14 @@ window.Quarto = {
 </div>
 </div>
 <p>En python se pueden hacer todas las operaciones entre números.</p>
-<div id="ba98390a" class="cell" data-execution_count="5">
+<div id="f48a65ce" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resta</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">-</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>-1</code></pre>
 </div>
 </div>
-<div id="0b8ce85e" class="cell" data-execution_count="6">
+<div id="efc390c0" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Producto</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -282,7 +294,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Las funciones en Python se evaluan usando paréntesis. Por ejemplo, debajo se muestra la función que hace del resultado de una operación un entero.</p>
-<div id="c6dcb0fc" class="cell" data-execution_count="7">
+<div id="c6c67c90" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de uso de la función int</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">int</span>(<span class="dv">3</span> <span class="op">+</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -290,7 +302,7 @@ window.Quarto = {
 </div>
 </div>
 <p>También podemos definir números complejos. Estos se logran escribiendo algo de la forma <span class="math inline">\(a + bJ\)</span>. Debajo se muestra un ejemplo. Cabe resaltar es importante no dejar <strong>ni un espacio</strong> entre el número y J.</p>
-<div id="762a2a43" class="cell" data-execution_count="8">
+<div id="19aaeac6" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número Complejo </span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">+</span> <span class="ot">2J</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -298,17 +310,17 @@ window.Quarto = {
 </div>
 </div>
 <p>Cualquiera de estos números puede almacenarse en una variable. Por ejemplo,</p>
-<div id="978b3e25" class="cell" data-execution_count="9">
+<div id="3b91bd9b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Almacenando un número en una variable </span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>variable <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="ot">2J</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Podemos aplicar una función directamente sobre una variable. Antes de ejemplificar esto, cargaremos las librerías que nos permiten hacer operaciones más complejas e introducir objetos matemáticos como vectores o matrices. Las librerías se importan debajo</p>
-<div id="5f9b7b09" class="cell" data-execution_count="10">
+<div id="dfc1c656" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se cargan las librerías que hacen python numérico</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Por ejemplo, aplicamos la función de conjugar:</p>
-<div id="f7feb420" class="cell" data-execution_count="11">
+<div id="a3e30c4b" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Operación conjugación </span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>conj(variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -316,7 +328,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Un vector se define a través de entradas ordenadas. Por ejemplo, el vector <span class="math inline">\((1,0,0)^{\text{T}}\)</span> se define como sigue</p>
-<div id="f96d6aa2" class="cell" data-execution_count="12">
+<div id="0c011fa5" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definición de vector</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>array([<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -325,20 +337,20 @@ window.Quarto = {
 </div>
 <p>Es importante usar la función array. De lo contrario, es imposible aplicar las operaciones conocidas sobre vectores.</p>
 <p><strong>OJO:</strong> Por defecto los vectores en Python son vectores renglón. También podemos guardar los vectores en variables.</p>
-<div id="89d47373" class="cell" data-execution_count="13">
+<div id="87d1fba3" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Almacenando dos vectores en variables</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> array([<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Gracias a que usé array a la hora de definir estos objetos, puedo sumarlos y restarlos como vectores:</p>
-<div id="a272d7f0" class="cell" data-execution_count="14">
+<div id="4b018db3" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Suma de vectores</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>v <span class="op">+</span> w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([5, 7, 9])</code></pre>
 </div>
 </div>
-<div id="31b5980e" class="cell" data-execution_count="15">
+<div id="aef0818b" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resta de vectores</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>v <span class="op">-</span> w</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -346,14 +358,14 @@ window.Quarto = {
 </div>
 </div>
 <p>Notemos que el resultado también es un array. En general, podemos comprobar que tipo de variable es un objeto usando la función type. En este caso,</p>
-<div id="40de8d87" class="cell" data-execution_count="16">
+<div id="dcd975ae" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de función type </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>( v )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>numpy.ndarray</code></pre>
 </div>
 </div>
-<div id="7bf69184" class="cell" data-execution_count="17">
+<div id="af51fb31" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de función type </span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -361,7 +373,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Otra operación importante es el producto punto. Esto se hace con la función dot().</p>
-<div id="aed1b5b9" class="cell" data-execution_count="18">
+<div id="cf4ebc18" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de proucto punto</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dot( v,w )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
@@ -369,7 +381,7 @@ window.Quarto = {
 </div>
 </div>
 <p>En mecánica cuántica, sin embargo, no se usa el producto cartesiano usual. Se suele hacer el producto de un bra y un ket. Esto se hace con la función vdot. En el caso de vectores reales, dot y vdot son equivalentes.</p>
-<div id="93be8078" class="cell" data-execution_count="19">
+<div id="20e158e6" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de vdot</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>vdot( v, w )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -377,14 +389,14 @@ window.Quarto = {
 </div>
 </div>
 <p>También, podemos extrar la entrada de una posición del vector. Pero hay que tener en cuenta que Python empieza a <strong>enumerar</strong> en cero.</p>
-<div id="71a526e5" class="cell" data-execution_count="20">
+<div id="8ff3373a" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos la primera entrada</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>1</code></pre>
 </div>
 </div>
-<div id="d3c96b71" class="cell" data-execution_count="21">
+<div id="ecffaebf" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos la segunda entrada</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>v[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
@@ -394,17 +406,17 @@ window.Quarto = {
 <p>Para definir una matriz, se usan corchetes dentro de corchetes. Cada corchete dentro del corchete representa un renglón. Por ejemplo, para constuir la matriz <span class="math display">\[\begin{pmatrix} 1 &amp; 2 &amp; 3 \\
 4 &amp; 5 &amp; 6 \\
 7 &amp; 8 &amp; 9\end{pmatrix},\]</span> usamos</p>
-<div id="47674b14" class="cell" data-execution_count="22">
+<div id="86071727" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir una matriz con array</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> array([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>],[<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>También se puede usar la función matrix.</p>
-<div id="92446470" class="cell" data-execution_count="23">
+<div id="cc9d6638" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir una matriz con array</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> matrix([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>],[<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>],[<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Para obtener la transpuesta de una matriz <span class="math inline">\(M\)</span> usamos <span class="math inline">\(M.T\)</span>. Esto sirve para ambas formas de definir una matriz .</p>
-<div id="d328f887" class="cell" data-execution_count="24">
+<div id="8e6d5b11" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir una matriz con array</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>A.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
@@ -413,7 +425,7 @@ window.Quarto = {
        [3, 6, 9]])</code></pre>
 </div>
 </div>
-<div id="811611cd" class="cell" data-execution_count="25">
+<div id="42c1af79" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir una matriz con array</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>B.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
@@ -423,7 +435,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Podemos transponer y conjugar también. En el caso de la definición de array, debemos hacer lo siguiente</p>
-<div id="01f406fe" class="cell" data-execution_count="26">
+<div id="9d811d7b" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transponer y conjugar un array</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>conj( A.T )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
@@ -433,7 +445,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Para el objeto matrix, se puede usar <span class="math inline">\(M.H\)</span>. Esto se muestra debajo,</p>
-<div id="7ca18679" class="cell" data-execution_count="27">
+<div id="facceed8" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Operador daga en una matriz</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>B.H</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
@@ -443,14 +455,14 @@ window.Quarto = {
 </div>
 </div>
 <p>Podemos obtener el primer renglón de una matriz de la misma forma que se extraía el primer elemento de un vector. Esto funciona tanto para la definición array como la definición matrix.</p>
-<div id="5d47bbdb" class="cell" data-execution_count="28">
+<div id="46789569" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener un renglón de un array</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>A[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <pre><code>array([1, 2, 3])</code></pre>
 </div>
 </div>
-<div id="e3ff981e" class="cell" data-execution_count="29">
+<div id="0e509c66" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener un renglón de una matriz</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>B[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
@@ -458,14 +470,14 @@ window.Quarto = {
 </div>
 </div>
 <p>Hay una sutil diferencia en el tipo de objeto de salida. En el primer caso la salida es un vector, en el segundo la salida es una matriz hecha por un sólo renglón. Aparte de type, puedo usar la función shape para saber que tengo.</p>
-<div id="847a55dd" class="cell" data-execution_count="30">
+<div id="be5a45bf" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de función shape</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>shape(A[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="30">
 <pre><code>(3,)</code></pre>
 </div>
 </div>
-<div id="c095b0a9" class="cell" data-execution_count="31">
+<div id="8befdfec" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de función shape</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>shape(B[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="31">
@@ -473,7 +485,7 @@ window.Quarto = {
 </div>
 </div>
 <p>También, podemos extraer la primera columna. En el caso de la definición array, esto se hace como sigue:</p>
-<div id="26f1da1d" class="cell" data-execution_count="32">
+<div id="a310d44a" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de función shape</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>A.T[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
@@ -481,7 +493,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Para la definición matrix, se usa lo mismo.</p>
-<div id="3aee3d7c" class="cell" data-execution_count="33">
+<div id="e946af53" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de función shape</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>B.T[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
@@ -489,7 +501,7 @@ window.Quarto = {
 </div>
 </div>
 <p>De forma alternativa, podría usar lo siguiente para el caso de matrix:</p>
-<div id="8fd27a43" class="cell" data-execution_count="34">
+<div id="7c62eb36" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso de función shape</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>B[:,<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
@@ -500,7 +512,7 @@ window.Quarto = {
 </div>
 <p>Notemos que esta salida si se asemeja a un vector columna.</p>
 <p>También podemos definir funciones usando def nombredefunción(variables). Al final, se añaden dos puntos. Por ejemplo,</p>
-<div id="e53b0119" class="cell" data-execution_count="35">
+<div id="17d72ed6" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definiendo una función</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nombre(x):</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dentro de una función pueden dejarse comentarios.</span></span>
@@ -509,14 +521,14 @@ window.Quarto = {
 <span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> v</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>La función se aplica como cualquier otra.</p>
-<div id="9bdeec78" class="cell" data-execution_count="36">
+<div id="7cb98fbb" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando la función</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>nombre(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="36">
 <pre><code>array([4, 4, 4])</code></pre>
 </div>
 </div>
-<div id="9317790e" class="cell" data-execution_count="37">
+<div id="36b86da8" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando la función en otro objeto posible</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>nombre( array([<span class="dv">4</span>,<span class="dv">6</span>]) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="37">
@@ -527,7 +539,7 @@ window.Quarto = {
 </div>
 <p>Siempre es mejor pensar en funciones que reciben argumentos a la hora de tratar problemas.</p>
 <p>Finalmente, veamos ciclos de instrucciones. El primero es el ciclo for. Este ciclo recorre una colección de datos:</p>
-<div id="d291228f" class="cell" data-execution_count="38">
+<div id="a99ec4f4" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejempo ciclo for</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>colección <span class="op">=</span> array([<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>])</span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -540,7 +552,7 @@ window.Quarto = {
 </div>
 </div>
 <p>El último for puede reducirse a una sola linea.</p>
-<div id="45ea415b" class="cell" data-execution_count="39">
+<div id="7a6b2419" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for en una linea</span></span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>[<span class="bu">print</span>(v) <span class="cf">for</span> v <span class="kw">in</span> colección]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -553,7 +565,7 @@ window.Quarto = {
 </div>
 </div>
 <p>La colección puede ser una matriz.</p>
-<div id="de538ecf" class="cell" data-execution_count="40">
+<div id="6327bf91" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for en una linea</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> v <span class="kw">in</span> A:</span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -564,7 +576,7 @@ window.Quarto = {
 </div>
 </div>
 <p>También puedo sacar los eigenvalores de una matriz. Si mi matriz es una matriz cualquiera, uso eigvals. Si mi matriz es hermítica, puedo usar eigvalsh.</p>
-<div id="0ef5779b" class="cell" data-execution_count="41">
+<div id="b00fcb02" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigvals regresa los eigenvalores de una matriz sin ordenar. </span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>eigvals(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="41">
@@ -969,8 +981,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./clase2.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Introducción a PythonTB</span>">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introducción a PythonTB</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./clase2.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Hamiltinianos de amarre fuerte en Python</span>">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hamiltinianos de amarre fuerte en Python</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

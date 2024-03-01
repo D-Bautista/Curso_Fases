@@ -254,54 +254,58 @@ window.Quarto = {
 
 
 <p>En esta clase implementaremos la acción de un campo magnético perpendicular a nuestro material.</p>
-<div id="2155bf81" class="cell" data-execution_count="1">
+<div id="daf86dce" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pythtb <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En esta ocasión, añadimos una linea que hace que el tamaó de las gráficas esté fijo.</p>
+<div id="b0686f1c" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">6</span>,<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="visualización-de-los-niveles-de-energía" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="visualización-de-los-niveles-de-energía"><span class="header-section-number">7.1</span> Visualización de los niveles de energía</h2>
 <p>Utilizamos el Hamiltoniano que usamos la clase pasada.</p>
-<div id="087564ce" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>a1  <span class="op">=</span> array([<span class="dv">1</span>,<span class="dv">0</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a2  <span class="op">=</span> array([<span class="dv">0</span>,<span class="dv">1</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>vectoresRed <span class="op">=</span> array([a1,a2]) <span class="co">#0*a1 + 0*a2</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sitio <span class="op">=</span> array([<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>]) <span class="co">#Sitio del orbital</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>orbitales <span class="op">=</span> array([sitio]) <span class="co">#Lista con todos los itios. </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el Hamiltoniano de amarre fuerte.</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>cuadrada <span class="op">=</span> tb_model(<span class="dv">2</span>,<span class="dv">2</span>, vectoresRed, orbitales)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Definimos los hoppings.</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">1</span>,<span class="dv">0</span>])</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlace entre orbital 0 y orbital 0 desplazo por 0*a1 + 1*a2</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>cuadrada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># (0,1) significa en la dirección de a1 y a2. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="363994c9" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a1  <span class="op">=</span> array([<span class="dv">1</span>,<span class="dv">0</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a2  <span class="op">=</span> array([<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>vectoresRed <span class="op">=</span> array([a1,a2]) <span class="co">#0*a1 + 0*a2</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sitio <span class="op">=</span> array([<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>]) <span class="co">#Sitio del orbital</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>orbitales <span class="op">=</span> array([sitio]) <span class="co">#Lista con todos los itios. </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos el Hamiltoniano de amarre fuerte.</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>cuadrada <span class="op">=</span> tb_model(<span class="dv">2</span>,<span class="dv">2</span>, vectoresRed, orbitales)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Definimos los hoppings.</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">1</span>,<span class="dv">0</span>])</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>cuadrada.set_hop(t,<span class="dv">0</span>,<span class="dv">0</span>,[<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Enlace entre orbital 0 y orbital 0 desplazo por 0*a1 + 1*a2</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>cuadrada.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># (0,1) significa en la dirección de a1 y a2. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="clase4_files/figure-html/cell-3-output-1.png" width="578" height="559" class="figure-img"></p>
+<p><img src="clase4_files/figure-html/cell-4-output-1.png" width="504" height="485" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Para obtener la estructura de bandas, debemos tomar un camino en el espacio recíproco. PythTB sabe crear un camino si se le dan de entrada puntos que definen el camino en la base del espacio recíproco. Debajo, definimos dichos puntos y usamos la función <em>k_path</em>. Esta función toma como entrada la serie de puntos que define el camino y el número de puntosa tomar. Luego, podemos usar la función <em>solve_all</em> usando como entrada el k_vec obtenido.</p>
-<div id="fee71fab" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>PuntosaRecorrer <span class="op">=</span> [[<span class="dv">0</span>,<span class="dv">0</span>], <span class="co"># 0 * b1 + 0 * b2</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">0</span>], <span class="co"># 1/2 * b1 + 0 * b2</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                    [<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>]] <span class="co"># 1/2 * b1 + 1/2 * b2</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Una vez dados los puntos, podemos </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>k_vec,k_dist,k_node <span class="op">=</span> cuadrada.k_path(PuntosaRecorrer,<span class="dv">1001</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>Ek <span class="op">=</span> cuadrada.solve_all(k_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="bb5c8348" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>PuntosaRecorrer <span class="op">=</span> [[<span class="dv">0</span>,<span class="dv">0</span>], <span class="co"># 0 * b1 + 0 * b2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                   [<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">0</span>], <span class="co"># 1/2 * b1 + 0 * b2</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    [<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>]] <span class="co"># 1/2 * b1 + 1/2 * b2</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Una vez dados los puntos, podemos </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>k_vec,k_dist,k_node <span class="op">=</span> cuadrada.k_path(PuntosaRecorrer,<span class="dv">1001</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Ek <span class="op">=</span> cuadrada.solve_all(k_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>----- k_path report begin ----------
 real-space lattice vectors
@@ -330,75 +334,78 @@ node index list:    [   0  500 1000]
 </code></pre>
 </div>
 </div>
-<div id="74ceaf29" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" Ek tiene forma (nband,kpoints), donde nband es el número de bandas y kpoints el número de puntos k</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">en el camino usado. Por eso debemos trasponer, para </span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">tener una gráfica donde se grafiquen puntos k vs los </span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">1001 valores de energía. </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5e524e87" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" Ek tiene forma (nband,kpoints), donde nband es el número de bandas y kpoints el número de puntos k</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">en el camino usado. Por eso debemos trasponer, para </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">tener una gráfica donde se grafiquen puntos k vs los </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">1001 valores de energía. </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="clase4_files/figure-html/cell-5-output-1.png" width="569" height="411" class="figure-img"></p>
+<p><img src="clase4_files/figure-html/cell-6-output-1.png" width="495" height="485" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="8a0478a8" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="05293793" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="clase4_files/figure-html/cell-6-output-1.png" width="569" height="411" class="figure-img"></p>
+<p><img src="clase4_files/figure-html/cell-7-output-1.png" width="495" height="485" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Para dar más estilo a esta gráfica recurrimos a la variable k_node. Esta variable contiene que valor entre 0 y 1 corresponde a cada uno de los puntos usados. Por ello, podemos usar k_node como ticks.</p>
-<div id="44058afe" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(k_node)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cdde3a21" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(k_node)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0.  0.5 1. ]</code></pre>
 </div>
 </div>
 <p>Haciendo eso, tenemos lo siguiente</p>
-<div id="6b14abce" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek[<span class="dv">0</span>])</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>xticks(k_node, labels <span class="op">=</span> [<span class="st">"$ \Gamma $"</span>,<span class="st">"X"</span>,<span class="st">"XY"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;&gt;:3: SyntaxWarning:
-
-invalid escape sequence '\G'
-
-&lt;&gt;:3: SyntaxWarning:
-
-invalid escape sequence '\G'
-
-/var/folders/l5/0mztyfpn39b_ktrjbczprp2c0000gn/T/ipykernel_70893/3177515379.py:3: SyntaxWarning:
-
-invalid escape sequence '\G'
-</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>([&lt;matplotlib.axis.XTick at 0x10fcb8860&gt;,
-  &lt;matplotlib.axis.XTick at 0x10fd50140&gt;,
-  &lt;matplotlib.axis.XTick at 0x10fcc5040&gt;],
- [Text(0.0, 0, '$ \\Gamma $'), Text(0.5, 0, 'X'), Text(1.0, 0, 'XY')])</code></pre>
+<div id="49b2af76" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa a trasponer es tomar el renglón cero.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek[<span class="dv">0</span>])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>xticks(k_node, labels <span class="op">=</span> [<span class="st">"$Γ$"</span>,<span class="st">"X"</span>,<span class="st">"XY"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>([&lt;matplotlib.axis.XTick at 0x11f758e00&gt;,
+  &lt;matplotlib.axis.XTick at 0x11f758d40&gt;,
+  &lt;matplotlib.axis.XTick at 0x118cbd940&gt;],
+ [Text(0.0, 0, '$Γ$'), Text(0.5, 0, 'X'), Text(1.0, 0, 'XY')])</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="clase4_files/figure-html/cell-8-output-3.png" width="569" height="411" class="figure-img"></p>
+<p><img src="clase4_files/figure-html/cell-9-output-2.png" width="495" height="485" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Ya viendo como graficar las bandas, podemos proceder a añadir el campo magnético. Para ello, partimos del potencial vector <span class="math display">\[\vec{A} = \left(-By,0,0\right) \Longrightarrow \vec{B} = B \hat{e}_{z}.\]</span> La forma de añadir el campo magnético es mediante la substitución de Peierls <span class="math display">\[t_{\vec{A}}^{i \rightarrow j} = t_{\vec{A} = \vec{0}}^{i \rightarrow j}\exp\left[\frac{iq}{h}\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r}\right].\]</span></p>
-<p>El primer enlace va de <span class="math inline">\(\vec{r}_{i} = [0,0]\)</span> a <span class="math inline">\(\vec{r}_{j} = [0,1]\)</span>. En este caso <span class="math display">\[\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r} = - B\frac{y_{i} + y_{j}}{2}(x_{j} - x_{i}).\]</span></p>
+<p>Ya viendo como graficar las bandas, podemos proceder a añadir el campo magnético. Para ello, partimos del potencial vector <span class="math display">\[\vec{A} = \frac{1}{2}\left(-By,Bx,0\right) \Longrightarrow \vec{B} = B \hat{e}_{z}.\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Normas usuales del potencial vector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Otras normas usuales para el potencial vector son <span class="math inline">\(\vec{A} = (0,Bx,0)\)</span> o <span class="math inline">\(\vec{A} = (-By,0,0)\)</span></p>
+</div>
+</div>
+<p>La forma de añadir el campo magnético es mediante la substitución de Peierls <span class="math display">\[t_{\vec{A}}^{i \rightarrow j} = t_{\vec{A} = \vec{0}}^{i \rightarrow j}\exp\left[\frac{iq}{h}\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r}\right].\]</span></p>
+<p>En este caso <span class="math display">\[\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = \frac{B}{4}\left[(y' + y)(x - x') + (x' + x)(y' - y) \right].\]</span></p>
+<p>Para el primer enlace horizontal, tenemos que <span class="math inline">\(\vec{r} = (a/2,a/2)\)</span> y <span class="math inline">\(\vec{r}' = (3a/2,a/2)\)</span>. Esto arroja que <span class="math display">\[\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = - \frac{1}{4}Ba^{2}.\]</span> Para el enlace vertical <span class="math inline">\(\vec{r}' = (a/2,3a/2)\)</span>, de modo que <span class="math display">\[\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = \frac{1}{4}Ba^{2}.\]</span></p>
+<p>Sin embargo, notemos que podríamos haber centrado nuestro sistema de coordenadas en el origen. En este caso <span class="math inline">\(\vec{r} = (0,0)\)</span> y <span class="math inline">\(\vec{r'} = (a,0)\)</span>. Para este caso <span class="math display">\[\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = 0.\]</span></p>
+<p>Aquí empezamos a encontrarnos varios problemas. El resultado no debería depender de donde ponemos el origen. ¿Qué norma elegimos entonces?</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -409,12 +416,132 @@ Elección del potencial vector
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A la hora de elegir el potencial vector debemos tener cuidado con que este cumpla las condiciones de frontera. Es decir, si el sistema es periódico en <span class="math inline">\(x\)</span>, por ejemplo, el potencial vector debe ser periódico en <span class="math inline">\(x\)</span>.</p>
+<p>A la hora de elegir el potencial vector debemos tener cuidado con que este cumpla las condiciones de frontera. Por ejemplo, si el sistema es periódico en <span class="math inline">\(x\)</span>, el potencial vector debe ser periódico en <span class="math inline">\(x\)</span>.</p>
 </div>
 </div>
-<p>En este caso, tomaremos un sistema que <strong>es periódico en dirección x</strong> con tal de que nuestro potencial <span class="math inline">\(\vec{A}\)</span> pueda describir el sistema.</p>
-<div id="4d97680e" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> cuadrada.make_supercell([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">0</span>,<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Para una red cuadrada, una forma de elegir la norma es tomando <span class="math display">\[\vec{A} = \left(0,Bx,0\right)\]</span> y usando una supercelda que conserve la periodicidad de este potencial. Para esta elección, la fase de Peierls es <span class="math display">\[\phi = i \frac{eB}{2\hbar}a^{2}\left[(x'+x)(y'-y)\right].\]</span> En esta fase, las <span class="math inline">\((x,y)\)</span> están en términos de la base (tal como lo hace PythTB), por ello sacamos a.</p>
+<p>En general, siempre se puede jugar con tomar una celda más grande para que esta tenga la periodicidad del potencial vector. Dicho eso, creamos nuestra supercelda para este problema. También, definimos las constantes que aparecen en la fase de Peierls.</p>
+<div id="17c9690c" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de repeticiones</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nrep <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> cuadrada.cut_piece(nrep,<span class="dv">0</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga del electrón</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> <span class="fl">1.602e-19</span> <span class="co">#C</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Constante de Planck</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">6.62e-34</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>hbar <span class="op">=</span> h<span class="op">/</span><span class="dv">2</span><span class="op">/</span>pi</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Campo magnético</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> <span class="dv">400</span> <span class="co"># T (logrado fácilmente con imanes Mi Alegría)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Constante de red</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">2e-10</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> e<span class="op">*</span>B<span class="op">*</span>a<span class="op">*</span>a<span class="op">/</span><span class="dv">2</span><span class="op">/</span>hbar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Imprimimos el factor.</p>
+<div id="72d9ecc6" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.012163943035772444</code></pre>
+</div>
+</div>
+<p>Para añadir el campo magnético, copiaremos el hamiltoniano modificando los hoppings.</p>
+<div id="41b40f4d" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copia del Hamiltoniano modificando los hoppings</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>scMAG <span class="op">=</span> tb_model(<span class="dv">2</span>,<span class="dv">2</span>,sc.get_lat(),sc.get_orb())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para saber que hemos copiado, mostramos la supercelda definida anteriormente y sus hoppings. Para esto último usamos el método _hoppings.</p>
+<div id="1a3279b7" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sc._hoppings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>[[1, 0, 1, array([0, 0])],
+ [1, 0, 0, array([0, 1])],
+ [1, 1, 2, array([0, 0])],
+ [1, 1, 1, array([0, 1])],
+ [1, 2, 3, array([0, 0])],
+ [1, 2, 2, array([0, 1])],
+ [1, 3, 4, array([0, 0])],
+ [1, 3, 3, array([0, 1])],
+ [1, 4, 5, array([0, 0])],
+ [1, 4, 4, array([0, 1])],
+ [1, 5, 6, array([0, 0])],
+ [1, 5, 5, array([0, 1])],
+ [1, 6, 7, array([0, 0])],
+ [1, 6, 6, array([0, 1])],
+ [1, 7, 8, array([0, 0])],
+ [1, 7, 7, array([0, 1])],
+ [1, 8, 9, array([0, 0])],
+ [1, 8, 8, array([0, 1])],
+ [1, 9, 9, array([0, 1])]]</code></pre>
+</div>
+</div>
+<div id="eb096076" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sc.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase4_files/figure-html/cell-14-output-1.png" width="492" height="485" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Dicho eso, modificamos los hoppings dentro de nuestra copia. Para ello, usamos la ecuación expuesta anteriormente. Primero obtenemos las posiciones de los sitios. También obtenemos el shift que tiene cada sitio respecto a la primera celda unitaria. Con estos datos, hacemos la modificación a los hoppings. En cada iteración imprimimos el hopping que obtenemos.</p>
+<div id="70655e75" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X,Y <span class="op">=</span> dot(sc.get_orb(),sc.get_lat()).T</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> hop,i,j,cell <span class="kw">in</span> sc._hoppings:</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    shift <span class="op">=</span> dot(cell,sc.get_lat())</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    hopMAG <span class="op">=</span> hop <span class="op">*</span> exp(<span class="ot">1J</span><span class="op">*</span>factor<span class="op">*</span>(X[j] <span class="op">-</span> shift[<span class="dv">0</span>] <span class="op">+</span> X[i])<span class="op">*</span>(Y[j] <span class="op">-</span> shift[<span class="dv">1</span>] <span class="op">-</span> Y[i]))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    scMAG.set_hop(hopMAG,i,j,cell)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ya que tenemos todos los hoppings definidos, sacamos la supercelda <strong>de la copia</strong>.</p>
+<div id="e13e19c6" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>scMAG <span class="op">=</span> scMAG.cut_piece(<span class="dv">1</span>,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9da7b637" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>scMAG.visualize(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase4_files/figure-html/cell-17-output-1.png" width="492" height="485" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ya hecho esto, graficamos la estructura de bandas. Graficamos las bandas de las estructuras con y sin campo magnético para comparar.</p>
+<div id="41439015" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> linspace(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1000</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>EkMAG <span class="op">=</span> scMAG.solve_all(k)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Ek <span class="op">=</span> sc.solve_all(k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="6b06e59c" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bandas campo magnético</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plot(k,EkMAG.T,c <span class="op">=</span> <span class="st">"k"</span>,alpha <span class="op">=</span> <span class="fl">0.4</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Bandas sin campo magnético</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plot(k,Ek.T,c <span class="op">=</span> <span class="st">"r"</span>,alpha <span class="op">=</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase4_files/figure-html/cell-19-output-1.png" width="495" height="485" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Periodicidad en eje Y
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De haber tomado la periodicidad en el eje Y con este potencial, habríamos visto que el cálculo no hubier funcionado.</p>
+</div>
 </div>
 
 

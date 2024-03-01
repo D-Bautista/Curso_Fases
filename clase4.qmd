@@ -7,6 +7,13 @@ from pylab import *
 from pythtb import *
 ```
 
+En esta ocasión, añadimos una linea que hace que el tamaó de las gráficas esté fijo. 
+
+```{python}
+plt.rcParams['figure.figsize'] = [6,6]
+```
+
+
 ## Visualización de los niveles de energía
 
 Utilizamos el Hamiltoniano que usamos la clase pasada.
@@ -28,7 +35,7 @@ cuadrada = tb_model(2,2, vectoresRed, orbitales)
 t = 1
 cuadrada.set_hop(t,0,0,[1,0])
 # Enlace entre orbital 0 y orbital 0 desplazo por 1*a1 + 0*a2
-cuadrada.set_hop(t,0,0,[0,-1])
+cuadrada.set_hop(t,0,0,[0,1])
 # Enlace entre orbital 0 y orbital 0 desplazo por 0*a1 + 1*a2
 
 cuadrada.visualize(0,1)
@@ -75,21 +82,116 @@ Haciendo eso, tenemos lo siguiente
 ```{python}
 # Una alternativa a trasponer es tomar el renglón cero.
 plot(k_dist,Ek[0])
-xticks(k_node, labels = ["$ \Gamma $","X","XY"])
+xticks(k_node, labels = ["$Γ$","X","XY"])
 ```
 
-Ya viendo como graficar las bandas, podemos proceder a añadir el campo magnético. Para ello, partimos del potencial vector $$\vec{A} = \left(-By,0,0\right) \Longrightarrow \vec{B} = B \hat{e}_{z}.$$ La forma de añadir el campo magnético es mediante la substitución de Peierls $$t_{\vec{A}}^{i \rightarrow j} = t_{\vec{A} = \vec{0}}^{i \rightarrow j}\exp\left[\frac{iq}{h}\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r}\right].$$
+Ya viendo como graficar las bandas, podemos proceder a añadir el campo magnético. Para ello, partimos del potencial vector $$\vec{A} = \frac{1}{2}\left(-By,Bx,0\right) \Longrightarrow \vec{B} = B \hat{e}_{z}.$$ 
 
-El primer enlace va de $\vec{r}_{i} = [0,0]$ a $\vec{r}_{j} = [0,1]$. En este caso $$\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r} = - B\frac{y_{i} + y_{j}}{2}(x_{j} - x_{i}).$$
+::: {.callout-note}
+## Normas usuales del potencial vector
+Otras normas usuales para el potencial vector son $\vec{A} = (0,Bx,0)$ o $\vec{A} = (-By,0,0)$
+:::
+
+La forma de añadir el campo magnético es mediante la substitución de Peierls $$t_{\vec{A}}^{i \rightarrow j} = t_{\vec{A} = \vec{0}}^{i \rightarrow j}\exp\left[\frac{iq}{h}\int_{\vec{r}_{i}}^{\vec{r}_{j}} \vec{A}\cdot \text{d}\vec{r}\right].$$
+
+En este caso $$\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = \frac{B}{4}\left[(y' + y)(x - x') + (x' + x)(y' - y) \right].$$
+
+Para el primer enlace horizontal, tenemos que $\vec{r} = (a/2,a/2)$ y $\vec{r}' = (3a/2,a/2)$. Esto arroja que $$\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = - \frac{1}{4}Ba^{2}.$$ Para el enlace vertical $\vec{r}' = (a/2,3a/2)$, de modo que $$\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = \frac{1}{4}Ba^{2}.$$
+
+Sin embargo, notemos que podríamos haber centrado nuestro sistema de coordenadas en el origen. En este caso $\vec{r} = (0,0)$ y $\vec{r'} = (a,0)$. Para este caso $$\int_{\vec{r}}^{\vec{r}'} \vec{A}\cdot \text{d}\vec{r} = 0.$$
+
+Aquí empezamos a encontrarnos varios problemas. El resultado no debería depender de donde ponemos el origen. ¿Qué norma elegimos entonces? 
 
 ::: {.callout-important}
 ## Elección del potencial vector
 
-A la hora de elegir el potencial vector debemos tener cuidado con que este cumpla las condiciones de frontera. Es decir, si el sistema es periódico en $x$, por ejemplo, el potencial vector debe ser periódico en $x$. 
+A la hora de elegir el potencial vector debemos tener cuidado con que este cumpla las condiciones de frontera. Por ejemplo, si el sistema es periódico en $x$, el potencial vector debe ser periódico en $x$. 
 :::
 
-En este caso, tomaremos un sistema que **es periódico en dirección x** con tal de que nuestro potencial $\vec{A}$ pueda describir el sistema. 
+Para una red cuadrada, una forma de elegir la norma es tomando $$\vec{A} = \left(0,Bx,0\right)$$ y usando una supercelda que conserve la periodicidad de este potencial. Para esta elección, la fase de Peierls es $$\phi = i \frac{eB}{2\hbar}a^{2}\left[(x'+x)(y'-y)\right].$$ En esta fase, las $(x,y)$ están en términos de la base (tal como lo hace PythTB), por ello sacamos a.
+
+En general, siempre se puede jugar con tomar una celda más grande para que esta tenga la periodicidad del potencial vector. Dicho eso, creamos nuestra supercelda para este problema. También, definimos las constantes que aparecen en la fase de Peierls. 
 
 ```{python}
-sc = cuadrada.make_supercell([[1,2],[0,2]])
+# Número de repeticiones
+nrep = 10
+
+sc = cuadrada.cut_piece(nrep,0)
+
+# Carga del electrón
+e = 1.602e-19 #C
+
+# Constante de Planck
+h = 6.62e-34
+hbar = h/2/pi
+
+# Campo magnético
+B = 400 # T (logrado fácilmente con imanes Mi Alegría)
+
+# Constante de red
+a = 2e-10
+
+factor = e*B*a*a/2/hbar
 ```
+
+Imprimimos el factor.
+
+```{python}
+print(factor)
+```
+
+Para añadir el campo magnético, copiaremos el hamiltoniano modificando los hoppings. 
+
+```{python}
+# Copia del Hamiltoniano modificando los hoppings
+scMAG = tb_model(2,2,sc.get_lat(),sc.get_orb())
+```
+
+Para saber que hemos copiado, mostramos la supercelda definida anteriormente y sus hoppings. Para esto último usamos el método _hoppings.
+
+```{python}
+sc._hoppings
+```
+
+```{python}
+sc.visualize(0,1)
+```
+
+Dicho eso, modificamos los hoppings dentro de nuestra copia. Para ello, usamos la ecuación expuesta anteriormente. Primero obtenemos las posiciones de los sitios. También obtenemos el shift que tiene cada sitio respecto a la primera celda unitaria. Con estos datos, hacemos la modificación a los hoppings. En cada iteración imprimimos el hopping que obtenemos. 
+```{python}
+X,Y = dot(sc.get_orb(),sc.get_lat()).T
+for hop,i,j,cell in sc._hoppings:
+    shift = dot(cell,sc.get_lat())
+    hopMAG = hop * exp(1J*factor*(X[j] - shift[0] + X[i])*(Y[j] - shift[1] - Y[i]))
+    scMAG.set_hop(hopMAG,i,j,cell)
+```
+
+Ya que tenemos todos los hoppings definidos, sacamos la supercelda **de la copia**.
+```{python}
+scMAG = scMAG.cut_piece(1,0)
+```
+
+```{python}
+scMAG.visualize(0,1)
+```
+
+Ya hecho esto, graficamos la estructura de bandas. Graficamos las bandas de las estructuras con y sin campo magnético para comparar. 
+
+```{python}
+k = linspace(0,1,1000)
+EkMAG = scMAG.solve_all(k)
+Ek = sc.solve_all(k)
+```
+
+```{python}
+# Bandas campo magnético
+plot(k,EkMAG.T,c = "k",alpha = 0.4)
+#Bandas sin campo magnético
+plot(k,Ek.T,c = "r",alpha = 0.2)
+```
+
+::: {.callout-important}
+## Periodicidad en eje Y
+
+De haber tomado la periodicidad en el eje Y con este potencial, habríamos visto que el cálculo no hubier funcionado. 
+:::
