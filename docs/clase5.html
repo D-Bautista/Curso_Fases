@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./clase6.html" rel="next">
 <link href="./clase4.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -219,6 +219,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./clase6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">clase6.html</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -254,16 +260,16 @@ window.Quarto = {
 
 
 <p>En este clase se implementará el modelo de Su–Schrieffer–Heeger (modelo SSH) y se estudiarán sus propiedades topológicas. Como se hizo en las clases pasadas, todo se hará con la librería Python TB.</p>
-<div id="03247e0e" class="cell" data-execution_count="1">
+<div id="b71c1d1a" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pythtb <span class="im">import</span> <span class="op">*</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Se definen parámetros para tener gráficas de tamaño óptimo.</p>
-<div id="998c466f" class="cell" data-execution_count="2">
+<div id="584dd83b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> [<span class="dv">6</span>,<span class="dv">6</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>El modelo SSH es una cadena unidimensional. Por ello, basta definir un único vector de red base.</p>
-<div id="5cda107a" class="cell" data-execution_count="3">
+<div id="065d68c0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> array([a])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -288,7 +294,7 @@ window.Quarto = {
 <span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>SSH.set_hop(w,<span class="dv">0</span>,<span class="dv">1</span>,[<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Visualizamos nuestra red.</p>
-<div id="0d1afb55" class="cell" data-execution_count="4">
+<div id="cac89b92" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SSH.visualize(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -299,7 +305,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Veamos los niveles de energía en el caso cuando el sistema es finito con <span class="math inline">\(n_{\text{rep}}\)</span> sitios. Además, añadimos condiciones de frontera periódicas (sitio <span class="math inline">\(i  = 1\)</span> es igual al sitio <span class="math inline">\(i = N\)</span>.) Esto se consigue creando una supercelda con el parámetro <em>glue_edgs</em> puesto en True.</p>
-<div id="5ae0a5fd" class="cell" data-execution_count="5">
+<div id="5d58e239" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se define la supercelda</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nrep <span class="op">=</span> <span class="dv">10</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> SSH.cut_piece(nrep,<span class="dv">0</span>,glue_edgs  <span class="op">=</span> <span class="va">True</span>)</span>
@@ -318,7 +324,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Para graficar, usamos un truco: graficamos con barras de error.</p>
-<div id="e749aaa9" class="cell" data-execution_count="6">
+<div id="f07f5f43" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">""" El zeros_like y el E nos grafican puntos de la forma</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"> (0,E). El xerr nos define las barcas de error.</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"> El fmt = ' ' hace que no aparezcan los puntos </span></span>
@@ -336,7 +342,7 @@ window.Quarto = {
 </div>
 <p>También podemos estudiar el llenado de los niveles. En esta supercelda tenemos <span class="math inline">\(2\cdot n_{\text{rep}}\)</span> sitios. Asumimos que hay un electrón por orbital a repartir en los niveles de energía. Asumimos que hay un grado dde libertad de spin. De esta forma, siempre se llenarán <span class="math inline">\(n_{\text{rep}}\)</span> niveles.</p>
 <p>Podemos ver el caso no periódico. En este caso, se rompen muchas degeneraciones y aparecen muchos más niveles.</p>
-<div id="272fac3b" class="cell" data-execution_count="7">
+<div id="b9262d3f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se define la supercelda</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>scnp <span class="op">=</span> SSH.cut_piece(nrep,<span class="dv">0</span>,glue_edgs  <span class="op">=</span> <span class="va">False</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -353,7 +359,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="5be5c62b" class="cell" data-execution_count="8">
+<div id="b51aff04" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>errorbar(zeros_like(Enp),Enp,xerr <span class="op">=</span> ones_like(Enp),fmt <span class="op">=</span> <span class="st">' '</span>,alpha <span class="op">=</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -364,15 +370,15 @@ window.Quarto = {
 </div>
 </div>
 <p>También, visualizamos los estados. Para ello, obtenemos los eigenvectores.</p>
-<div id="0acced25" class="cell" data-execution_count="9">
+<div id="7143923e" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>E,U <span class="op">=</span> sc.solve_all(eig_vectors <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>PythonTB regresa los eigenvectores por reglones de U. Entonces, la entrada i de <em>U</em> será el eigenvector con el eigenvalor correspondiente a la entrada i de <em>E</em>.</p>
-<div id="1c0ff0a4" class="cell" data-execution_count="10">
+<div id="31d4076e" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Por ejemplo, el vector U[0] es el asociado al eigenvalor E[0]</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>U[<span class="dv">0</span>]</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada entrada del vector U[0] es el coeficiente que multiplica al orbital de cada sitio. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="50">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>array([-0.2236068+0.j,  0.2236068+0.j, -0.2236068+0.j,  0.2236068+0.j,
        -0.2236068+0.j,  0.2236068+0.j, -0.2236068+0.j,  0.2236068+0.j,
        -0.2236068+0.j,  0.2236068+0.j, -0.2236068+0.j,  0.2236068+0.j,
@@ -381,22 +387,32 @@ window.Quarto = {
 </div>
 </div>
 <p>De la forma de <span class="math inline">\(U\)</span>, podemos extraer el número de niveles y orbitales.</p>
-<div id="63e7ad15" class="cell" data-execution_count="11">
+<div id="97d86ca9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nlevels, norbs <span class="op">=</span> shape(U)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Graficamos una gráfica de barras que nos diga el coeificente asociado a cada orbital. Para el nivel más bajo, vemos que el estado se distrbiuye entre todos los orbitales.</p>
-<div id="46bcb9be" class="cell" data-execution_count="12">
+<div id="1d6f708f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbs),U[<span class="dv">0</span>]<span class="op">*</span>conj(U[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/diegobautistaaviles/anaconda3/envs/pythontb/lib/python3.12/site-packages/matplotlib/cbook.py:1699: ComplexWarning:
+
+Casting complex values to real discards the imaginary part
+
+/Users/diegobautistaaviles/anaconda3/envs/pythontb/lib/python3.12/site-packages/matplotlib/transforms.py:766: ComplexWarning:
+
+Casting complex values to real discards the imaginary part
+</code></pre>
+</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="clase5_files/figure-html/cell-13-output-1.png" width="511" height="485" class="figure-img"></p>
+<p><img src="clase5_files/figure-html/cell-13-output-2.png" width="511" height="485" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="144599c0" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbs),U[<span class="dv">1</span>]<span class="op">*</span>conj(U[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="93113e95" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbs),U[<span class="dv">1</span>]<span class="op">*</span>conj(U[<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -406,13 +422,13 @@ window.Quarto = {
 </div>
 </div>
 <p>Vemos que en el caso con condiciones no periódicas hay estados que se concentran en los borde.s</p>
-<div id="79340c74" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Enp,Unp <span class="op">=</span> scnp.solve_all(eig_vectors <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>nlevelsnp, norbsnp <span class="op">=</span> shape(Unp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="679c7488" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Enp,Unp <span class="op">=</span> scnp.solve_all(eig_vectors <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>nlevelsnp, norbsnp <span class="op">=</span> shape(Unp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="dc9c72b6" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbsnp),Unp[<span class="dv">0</span>]<span class="op">*</span>conj(Unp[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="91da9200" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbsnp),Unp[<span class="dv">0</span>]<span class="op">*</span>conj(Unp[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -421,10 +437,10 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="573b3b08" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> nlevelsnp<span class="op">//</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbs),Unp[nb]<span class="op">*</span>conj(Unp[nb]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6626d0b5" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> nlevelsnp<span class="op">//</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>bar(<span class="bu">range</span>(norbs),Unp[nb]<span class="op">*</span>conj(Unp[nb]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -434,36 +450,36 @@ window.Quarto = {
 </div>
 </div>
 <p>Ahora, analicemos la quiralidad del problema. Para ello introducimos el operador de quiralidad <span class="math inline">\(\Sigma = \sum_{n = 1}^{N}\sigma_{z}\)</span>:</p>
-<div id="8153e1cb" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>σz <span class="op">=</span> array([[<span class="dv">1</span>,<span class="dv">0</span>],[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]])</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ID <span class="op">=</span> diag(ones(nrep))</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> kron(ID,σz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="aabf0ec3" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>σz <span class="op">=</span> array([[<span class="dv">1</span>,<span class="dv">0</span>],[<span class="dv">0</span>,<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ID <span class="op">=</span> diag(ones(nrep))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Σ <span class="op">=</span> kron(ID,σz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>De acuerdo a la teoría, el valor esperado del operador de quiralidad debe ser <span class="math inline">\(0\)</span>:</p>
-<div id="38c146e8" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>vdot( Unp[<span class="dv">0</span>] ,dot(Σ,Unp[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div id="9f237988" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>vdot( Unp[<span class="dv">0</span>] ,dot(Σ,Unp[<span class="dv">0</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>(-5.551115123125783e-17+0j)</code></pre>
 </div>
 </div>
 <p>También, calculamos el IPR: <span class="math display">\[\text{IPR}(E) = \sum_{\text{site}} |U(\vec{r}_{\text{site}})|^{4}\]</span></p>
-<div id="c21a3d11" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>IPR <span class="op">=</span> real(<span class="bu">sum</span>(U<span class="op">*</span>conj(Unp)<span class="op">*</span>U<span class="op">*</span>conj(Unp), axis <span class="op">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9ae4c8c9" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>IPR <span class="op">=</span> real(<span class="bu">sum</span>(U<span class="op">*</span>conj(Unp)<span class="op">*</span>U<span class="op">*</span>conj(Unp), axis <span class="op">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Podemos usar el IPR como coloración de los niveles de energía.</p>
-<div id="a22557de" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos una escala de colores. </span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> matplotlib.colormaps.get_cmap(<span class="st">"Blues"</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomamos los valores de IPR normalizados.</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>valores <span class="op">=</span> IPR<span class="op">/</span>IPR.<span class="bu">max</span>()</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>rgba <span class="op">=</span> cmap(valores)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>errorbar(zeros_like(Enp),Enp,xerr <span class="op">=</span> ones_like(Enp),fmt <span class="op">=</span> <span class="st">' '</span>, ecolor <span class="op">=</span> rgba)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>scatter(zeros_like(Enp),Enp,c <span class="op">=</span> valores, cmap <span class="op">=</span> <span class="st">"Blues"</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>colorbar()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="8cf06240" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos una escala de colores. </span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> matplotlib.colormaps.get_cmap(<span class="st">"Blues"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Tomamos los valores de IPR normalizados.</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>valores <span class="op">=</span> IPR<span class="op">/</span>IPR.<span class="bu">max</span>()</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>rgba <span class="op">=</span> cmap(valores)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>errorbar(zeros_like(Enp),Enp,xerr <span class="op">=</span> ones_like(Enp),fmt <span class="op">=</span> <span class="st">' '</span>, ecolor <span class="op">=</span> rgba)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>scatter(zeros_like(Enp),Enp,c <span class="op">=</span> valores, cmap <span class="op">=</span> <span class="st">"Blues"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>colorbar()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -870,8 +886,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./clase6.html" class="pagination-link" aria-label="<span class='chapter-number'>9</span>&nbsp; <span class='chapter-title'>clase6.html</span>">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">clase6.html</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

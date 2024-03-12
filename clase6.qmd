@@ -1,0 +1,3 @@
+# Modelo SSH con condiciones de frontera periódicas
+
+Ahora estudiaremos el modelo en el caso en que tenemos condiciones de frontera periódicas, de modo que es posible definir el espacio recíproco. 
