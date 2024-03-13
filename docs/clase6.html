@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -69,6 +103,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -172,7 +235,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#análisis-de-la-topología-del-sistema" id="toc-análisis-de-la-topología-del-sistema" class="nav-link active" data-scroll-target="#análisis-de-la-topología-del-sistema"><span class="header-section-number">9.1</span> Análisis de la topología del sistema</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -197,8 +266,168 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Ahora estudiaremos el modelo en el caso en que tenemos condiciones de frontera periódicas, de modo que es posible definir el espacio recíproco.</p>
+<div id="b2e19f3d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pylab <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pythtb <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="90a92c3b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> [a]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>lat <span class="op">=</span> [a1]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sitioA <span class="op">=</span> [<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sitioB <span class="op">=</span> [<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>orb <span class="op">=</span> [sitioA,sitioB]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>SSH <span class="op">=</span> tb_model(<span class="dv">1</span>,<span class="dv">1</span>,lat,orb)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>SSH.set_hop(v,<span class="dv">0</span>,<span class="dv">1</span>,[<span class="dv">0</span>])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>SSH.set_hop(w,<span class="dv">0</span>,<span class="dv">1</span>,[<span class="op">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora veremos las bandas como función de puntos del espacio recíproco. Primero, definimos los puntos a recorrer.</p>
+<div id="3db0d739" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos los puntos a recorrer en el espacio recíproco. Recordemos que esto es en la base de la red recíproca.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>puntosArcorrer <span class="op">=</span> [[<span class="dv">0</span>],[<span class="op">-</span><span class="dv">1</span>]]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#k_vec: los puntos en el camino del espacio reciproco. </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#k_dist: es la distancia recorrida en el camino.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#k_node: posición (el índice) en el cual se encuentran los puntosArecorrer</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos report = False para evitar que la función arroje texto inútil. </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>k_vec, k_dist, k_node <span class="op">=</span> SSH.k_path(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>puntosArcorrer,<span class="dv">101</span>, report <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Ek <span class="op">=</span> SSH.solve_all(k_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f9f87f63" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot(k_dist,Ek.T)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xticks(k_node,labels <span class="op">=</span> [<span class="st">'$\Gamma$'</span>,<span class="st">"$\Gamma'$"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>&lt;&gt;:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+
+&lt;&gt;:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+
+&lt;&gt;:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+
+&lt;&gt;:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+
+/var/folders/l5/0mztyfpn39b_ktrjbczprp2c0000gn/T/ipykernel_32390/1766604601.py:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+
+/var/folders/l5/0mztyfpn39b_ktrjbczprp2c0000gn/T/ipykernel_32390/1766604601.py:2: SyntaxWarning:
+
+invalid escape sequence '\G'
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>([&lt;matplotlib.axis.XTick at 0x10fe86810&gt;,
+  &lt;matplotlib.axis.XTick at 0x10fea5af0&gt;],
+ [Text(0.0, 0, '$\\Gamma$'), Text(1.0, 0, "$\\Gamma'$")])</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase6_files/figure-html/cell-5-output-3.png" width="582" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Notamos que las bandas son prácticamente lineales cerca de los puntos X y -X. Dentro de este mismo código, es posible modificar directamente tanto el camino, como los valores de <span class="math inline">\(v\)</span> y <span class="math inline">\(w\)</span>.</p>
+<section id="análisis-de-la-topología-del-sistema" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="análisis-de-la-topología-del-sistema"><span class="header-section-number">9.1</span> Análisis de la topología del sistema</h2>
+<p>Primero, dado que en principio los sitio A y B están compuestos del mismo orbital, es imposible disinguirlos. Por lo mismo, el sistema tiene una simetría de inversión. Esta transformación consiste en intercambiar los sitios A con los sitios B. En el espacio recíproco, esto corresponde a <span class="math display">\[\sigma_{x} = \begin{pmatrix} 0 &amp; 1 \\ 0 &amp; 1\end{pmatrix}.\]</span> Para estudiar esta operación, calcularemos su valor esperado para todos los estados.</p>
+<div id="ea7c13c2" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos σx</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>σx <span class="op">=</span> array([[<span class="dv">0</span>,<span class="dv">1</span>],[<span class="dv">1</span>,<span class="dv">0</span>]])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtenemos los eigenvectores</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Ek, U <span class="op">=</span> SSH.solve_all(k_vec,eig_vectors <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e18d8a62" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># De la forma de U se puede extraer el número de bandas, puntos k y sitios. </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>nbands, nkpts, nsites <span class="op">=</span> shape(U)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>lista0 <span class="op">=</span> []</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>lista1 <span class="op">=</span> []</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Para hacer los productos en cada punto, hacemos un for.</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nk,k <span class="kw">in</span> <span class="bu">enumerate</span>(k_vec):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    σx_0k <span class="op">=</span> real(vdot(U[<span class="dv">0</span>,nk,:],dot(σx,U[<span class="dv">0</span>,nk,:])))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    σx_1k <span class="op">=</span> real(vdot(U[<span class="dv">1</span>,nk,:],dot(σx,U[<span class="dv">1</span>,nk,:])))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    lista0.append(σx_0k)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    lista1.append(σx_1k)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>lista0 <span class="op">=</span> array(lista0)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>lista1 <span class="op">=</span> array(lista1)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Debajo se muestra una forma alternativa de hacer esto. </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">""":</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">    vdot(U[0][nk],dot(σx,U[0][nk]))"""</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">""""for nk in range(nkpts):"""</span>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>'"for nk in range(nkpts):'</code></pre>
+</div>
+</div>
+<div id="143cd15a" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>scatter(k_dist,Ek[<span class="dv">0</span>],c <span class="op">=</span> lista0,cmap <span class="op">=</span> <span class="st">'coolwarm'</span>,vmin <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,vmax <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>scatter(k_dist,Ek[<span class="dv">1</span>],c <span class="op">=</span> lista1,cmap <span class="op">=</span> <span class="st">'coolwarm'</span>,vmin <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,vmax <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase6_files/figure-html/cell-8-output-1.png" width="582" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Si uno hace esto, nota que pythtb no replica los resultados que deberían obtenerse experimentalmente.</p>
+<div id="f9be9869" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Ham(k):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    v,w <span class="op">=</span> <span class="dv">1</span>,<span class="fl">0.5</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    H <span class="op">=</span> array([[<span class="dv">0</span>,v<span class="op">+</span>w<span class="op">*</span>exp(<span class="ot">1J</span><span class="op">*</span>k)],[v<span class="op">+</span>w<span class="op">*</span>exp(<span class="op">-</span><span class="ot">1J</span><span class="op">*</span>k),<span class="dv">0</span>]])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    eigen,U <span class="op">=</span> eigh(H)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> eigen,U.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2d948633" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>lista0 <span class="op">=</span> []</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lista1 <span class="op">=</span> []</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> nk,k <span class="kw">in</span> <span class="bu">enumerate</span>(k_vec):</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    eigen,U <span class="op">=</span> Ham(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span>k[<span class="dv">0</span>])</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    σx_0k <span class="op">=</span> real(vdot(U[<span class="dv">0</span>],dot(σx,U[<span class="dv">0</span>])))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    σx_1k <span class="op">=</span> real(vdot(U[<span class="dv">1</span>],dot(σx,U[<span class="dv">1</span>])))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    lista0.append(σx_0k)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    lista1.append(σx_1k)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>lista0 <span class="op">=</span> array(lista0)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>lista1 <span class="op">=</span> array(lista1)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Debajo se muestra una </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8e55ddca" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>scatter(k_dist,Ek[<span class="dv">0</span>],c <span class="op">=</span> lista0,cmap <span class="op">=</span> <span class="st">'coolwarm'</span>,vmin <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,vmax <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>scatter(k_dist,Ek[<span class="dv">1</span>],c <span class="op">=</span> lista1,cmap <span class="op">=</span> <span class="st">'coolwarm'</span>,vmin <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,vmax <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="clase6_files/figure-html/cell-11-output-1.png" width="582" height="411" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

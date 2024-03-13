@@ -1,3 +1,121 @@
 # Modelo SSH con condiciones de frontera periódicas
 
 Ahora estudiaremos el modelo en el caso en que tenemos condiciones de frontera periódicas, de modo que es posible definir el espacio recíproco. 
+
+```{python}
+from pylab import *
+from pythtb import *
+```
+
+```{python}
+a = 1
+a1 = [a]
+lat = [a1]
+sitioA = [-1/4]
+sitioB = [1/4]
+orb = [sitioA,sitioB]
+
+SSH = tb_model(1,1,lat,orb)
+
+v = 1
+w = 0.5
+
+SSH.set_hop(v,0,1,[0])
+SSH.set_hop(w,0,1,[-1])
+```
+
+Ahora veremos las bandas como función de puntos del espacio recíproco. Primero, definimos los puntos a recorrer. 
+
+```{python}
+# Definimos los puntos a recorrer en el espacio recíproco. Recordemos que esto es en la base de la red recíproca.
+
+puntosArcorrer = [[0],[-1]]
+
+# Definimos:
+#k_vec: los puntos en el camino del espacio reciproco. 
+#k_dist: es la distancia recorrida en el camino.
+#k_node: posición (el índice) en el cual se encuentran los puntosArecorrer
+
+# Usamos report = False para evitar que la función arroje texto inútil. 
+k_vec, k_dist, k_node = SSH.k_path(
+puntosArcorrer,101, report = False)
+
+Ek = SSH.solve_all(k_vec)
+```
+
+```{python}
+plot(k_dist,Ek.T)
+xticks(k_node,labels = ['$\Gamma$',"$\Gamma'$"])
+```
+
+Notamos que las bandas son prácticamente lineales cerca de los puntos X y -X. Dentro de este mismo código, es posible modificar directamente tanto el camino, como los valores de $v$ y $w$.
+
+## Análisis de la topología del sistema
+
+Primero, dado que en principio los sitio A y B están compuestos del mismo orbital, es imposible disinguirlos. Por lo mismo, el sistema tiene una simetría de inversión. Esta transformación consiste en intercambiar los sitios A con los sitios B. En el espacio recíproco, esto corresponde a $$\sigma_{x} = \begin{pmatrix} 0 & 1 \\ 0 & 1\end{pmatrix}.$$ Para estudiar esta operación, calcularemos su valor esperado para todos los estados. 
+
+```{python}
+# Definimos σx
+σx = array([[0,1],[1,0]])
+
+# Obtenemos los eigenvectores
+Ek, U = SSH.solve_all(k_vec,eig_vectors = True)
+```
+
+```{python}
+# De la forma de U se puede extraer el número de bandas, puntos k y sitios. 
+nbands, nkpts, nsites = shape(U)
+
+lista0 = []
+lista1 = []
+
+# Para hacer los productos en cada punto, hacemos un for.
+for nk,k in enumerate(k_vec):
+    σx_0k = real(vdot(U[0,nk,:],dot(σx,U[0,nk,:])))
+    σx_1k = real(vdot(U[1,nk,:],dot(σx,U[1,nk,:])))
+    lista0.append(σx_0k)
+    lista1.append(σx_1k)
+
+lista0 = array(lista0)
+lista1 = array(lista1)
+# Debajo se muestra una forma alternativa de hacer esto. 
+""":
+    vdot(U[0][nk],dot(σx,U[0][nk]))"""
+
+""""for nk in range(nkpts):"""    
+```
+
+```{python}
+scatter(k_dist,Ek[0],c = lista0,cmap = 'coolwarm',vmin = -1,vmax = 1)
+scatter(k_dist,Ek[1],c = lista1,cmap = 'coolwarm',vmin = -1,vmax = 1)
+```
+
+Si uno hace esto, nota que pythtb no replica los resultados que deberían obtenerse experimentalmente. 
+
+```{python}
+def Ham(k):
+    v,w = 1,0.5
+    H = array([[0,v+w*exp(1J*k)],[v+w*exp(-1J*k),0]])
+    eigen,U = eigh(H)
+    return eigen,U.T
+```
+
+```{python}
+lista0 = []
+lista1 = []
+for nk,k in enumerate(k_vec):
+    eigen,U = Ham(2*pi*k[0])
+    σx_0k = real(vdot(U[0],dot(σx,U[0])))
+    σx_1k = real(vdot(U[1],dot(σx,U[1])))
+    lista0.append(σx_0k)
+    lista1.append(σx_1k)
+
+lista0 = array(lista0)
+lista1 = array(lista1)
+# Debajo se muestra una 
+```
+
+```{python}
+scatter(k_dist,Ek[0],c = lista0,cmap = 'coolwarm',vmin = -1,vmax = 1)
+scatter(k_dist,Ek[1],c = lista1,cmap = 'coolwarm',vmin = -1,vmax = 1)
+```
