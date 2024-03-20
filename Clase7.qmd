@@ -1,0 +1,106 @@
+# Descripción de red honeycomb
+
+```{python}
+from pylab import *
+from pythtb import *
+```
+
+```{python}
+a = 1.42 #Amstrong
+
+a1 = (a/2) * array([sqrt(3),3])
+a2 = (a/2) * array([-sqrt(3),3])
+
+lat = [a1,a2]
+sitioA = array([0,0])
+sitioB = array([1/3,1/3])
+orb = (sitioA,sitioB)
+
+grafeno = tb_model(2,2,lat,orb)
+
+t = 2.7 #eV
+
+grafeno.set_hop(-t,0,1,[0,0])
+grafeno.set_hop(-t,0,1,[-1,0])
+grafeno.set_hop(-t,0,1,[0,-1])
+
+grafeno.visualize(0,1)
+```
+
+A diferencia de como se hace usualmente, en este caso es mejor usar la celda unitaria definida por el paralelogramo formado por los vectores base recíproco.
+
+```{python}
+nkpt = 101
+k_vec = grafeno.k_uniform_mesh((nkpt,nkpt))
+Ek = grafeno.solve_all(k_vec)
+```
+
+Vemos que tenemos un total de 1,600 puntos.
+
+```{python}
+shape(Ek)
+```
+
+Para ver la malla, podemos hacer un scatter de los puntos que forman el espacio. Sin embargo, si hacemos el scatter directo, veremos una región no cuadrada correspondiente a paralelogramo formado por los vectores recíprocos. Esto es pues pythtb registra las coordenadas en la base de b1 y b2. Hay que hacer un campo de base.
+
+```{python}
+scatter(k_vec.T[0],k_vec.T[1])
+```
+
+Para que salga la celda, hay que meter mano.
+
+```{python}
+A = array([a1,a2])
+B = 2*pi*inv(A)
+
+b1,b2 = B.T
+
+reciprocolat = array([b1,b2])
+
+KX,KY = dot(k_vec,reciprocolat).T
+
+xlim(-3,3)
+ylim(0,6)
+
+scatter(KX,KY)
+```
+
+Para fines prácticos, nos conviene hacer un reshape del paralelogramo. Esto nos permite graficar de mejor forma.
+
+```{python}
+KX = KX.reshape((nkpt,nkpt))
+KY = KY.reshape((nkpt,nkpt))
+Ek = Ek.reshape((2,nkpt,nkpt))
+```
+
+Primero, hacemos unas líneas de contorno de las bandas.
+
+```{python}
+CS = contour(KX,KY,Ek[0], cmap = "Reds")
+Kmenos = (2/3) * b1 + (1/3) * b2
+scatter(Kmenos[0],Kmenos[1])
+Kmas = (1/3) * b1 + (2/3) * b2
+scatter(Kmas[0],Kmas[1])
+xlim(-3,3)
+ylim(-1,5)
+colorbar(CS)
+```
+
+Finalmente, graficamos 3D.
+
+```{python}
+import plotly.graph_objects as go
+```
+
+```{python}
+Graficas = [
+    go.Surface(x = KX, y = KY, z = Ek[0]),
+    go.Surface(x = KX, y = KY, z = Ek[1])
+]
+```
+
+
+```{python}
+fig = go.Figure(data = Graficas)
+fig.show()
+```
