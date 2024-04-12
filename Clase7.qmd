@@ -24,6 +24,14 @@ grafeno.set_hop(-t,0,1,[0,0])
 grafeno.set_hop(-t,0,1,[-1,0])
 grafeno.set_hop(-t,0,1,[0,-1])
 
+# Quita el comentario de esta linea para ver 
+# que ocurre cuando se pone un término onsite. 
+# grafeno.set_onsite([-0.2,0.2])
+
+# En general, es bueno poner un onsite, aunque sea 
+# chico, con tal de evitar problemas numéricos
+grafeno.set_onsite([-0.5,0.5])
+
 grafeno.visualize(0,1)
 ```
 
@@ -103,4 +111,141 @@ Graficas = [
 ```{python}
 fig = go.Figure(data = Graficas)
 fig.show()
+```
+
+Ahora calculamos las bandas en un camino. Usamos las funciones usadas en clases previas.
+
+```{python}
+PuntosARecorrer = [[0,0],[2/3,1/3],[1/2,1/2],[1/3,2/3],[0,0]]
+k_vec,k_dist,k_node = grafeno.k_path(PuntosARecorrer,101,report = False)
+```
+
+```{python}
+Ek = grafeno.solve_all(k_vec)
+```
+
+```{python}
+plot(k_dist,Ek.T)
+xticks(k_node, labels = ['G','K-','M','K+','G']);
+```
+
+# Curvatura de Berry
+
+Ahora calcularemos la curvatura de Berry. Recordemos que esta es igual a la fase acumulada en una plaqueta del espacio recíproco. 
+
+Para ello, necesitamos los eigenvectores. 
+
+```{python}
+k0 = array([0,0])
+k1 = array([0.1,0])
+k2 = array([0.1,0.1])
+k3 = array([0,0.1])
+
+E0,U0 = grafeno.solve_one(k0,eig_vectors = True)
+E1,U1 = grafeno.solve_one(k1,eig_vectors = True)
+E2,U2 = grafeno.solve_one(k2,eig_vectors = True)
+E3,U3 = grafeno.solve_one(k3,eig_vectors = True)
+```
+
+```{python}
+# Eigenvector asociado al eigenvalor E0[i] 
+# es el U0[i]. Por ejemplo,
+
+U0
+```
+
+```{python}
+# Calculamos la fase acumulada, i.e., la curvatura
+phase = imag(log( vdot(U0[0],U1[0]) *\
+vdot(U1[0],U2[0]) *\
+vdot(U2[0],U3[0]) *\
+vdot(U3[0],U0[0])))
+```
+
+Ahora, calculamos la fase en torno a un punto $K_{+}$.
+
+```{python}
+k0 = array([1/3      ,2/3])
+k1 = array([1/3 + 0.1,2/3])
+k2 = array([1/3 + 0.1,2/3 + 0.1])
+k3 = array([1/3      ,2/3 + 0.1])
+
+E0,U0 = grafeno.solve_one(k0,eig_vectors = True)
+E1,U1 = grafeno.solve_one(k1,eig_vectors = True)
+E2,U2 = grafeno.solve_one(k2,eig_vectors = True)
+E3,U3 = grafeno.solve_one(k3,eig_vectors = True)
+```
+```{python}
+# Calculamos la fase acumulada, i.e., la curvatura
+phase = imag(log( vdot(U0[0],U1[0]) *\
+vdot(U1[0],U2[0]) *\
+vdot(U2[0],U3[0]) *\
+vdot(U3[0],U0[0])))
+```
+
+```{python}
+phase
+```
+
+Ahora calculamos, pero cuidando que el punto K esté encerrado en el camino. 
+
+```{python}
+k0 = array([1/3 - 0.05,2/3 - 0.05])
+k1 = array([1/3 + 0.05,2/3 - 0.05])
+k2 = array([1/3 + 0.05,2/3 + 0.05])
+k3 = array([1/3 - 0.05,2/3 + 0.05])
+ 
+E0,U0 = grafeno.solve_one(k0,eig_vectors = True)
+E1,U1 = grafeno.solve_one(k1,eig_vectors = True)
+E2,U2 = grafeno.solve_one(k2,eig_vectors = True)
+E3,U3 = grafeno.solve_one(k3,eig_vectors = True)
+```
+```{python}
+# Calculamos la fase acumulada, i.e., la curvatura
+phase = imag(log( vdot(U0[0],U1[0]) *\
+vdot(U1[0],U2[0]) *\
+vdot(U2[0],U3[0]) *\
+vdot(U3[0],U0[0])))
+```
+
+```{python}
+phase
+```
+
+Ahora generalizamos el cálculo. Primero, sacamos un mallado.
+
+```{python}
+nkpts = 41
+kmesh = grafeno.k_uniform_mesh((nkpts,nkpts))
+
+Ek,U = grafeno.solve_all(kmesh, eig_vectors = True)
+
+def Curvatura(U0):
+    
+    # Definimos un arreglo que contendrá
+    # la curvatura. Como se requieren cuatro puntos
+    # para definir una curvatura, debemos hacer el 
+    # arreglo de nkpts - 1 para evitar problemas
+    # en los bordes. 
+    F = zeros( (nkpts - 1,nkpts - 1), dtype = 'complex')
+    for n in range(nkpts-1):
+        for m in range(nkpts-1):
+            F[n,m] = imag(log( \
+                     vdot( U0[n + 0,m + 0],U0[n + 1,m + 0]) * \
+                     vdot( U0[n + 1,m + 0],U0[n + 1,m + 1]) * \
+                     vdot( U0[n + 1,m + 1],U0[n + 0,m + 1]) * \
+                     vdot( U0[n + 0,m + 1],U0[n + 0,m + 0])))
+    return F
+
+nband,nk,nsiteos = shape(U)
+
+# Eigenvectores asociados a la banda cero reordenados en la forma del mesh. 
+U0 = U[0].reshape(nkpts,nkpts,2)
+
+F = Curvatura(U0)
+```
+
+```{python}
+imshow(F.real)
+colorbar()
 ```
